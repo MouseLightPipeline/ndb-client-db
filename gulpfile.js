@@ -5,6 +5,8 @@ var plumber = require('gulp-plumber');
 var ts = require("gulp-typescript");
 var gulpTypings = require("gulp-typings");
 var tslint = require("gulp-tslint");
+var merge = require('merge2'); 
+var concat = require('gulp-concat');
 
 gulp.task('default', ['watch']);
 
@@ -37,7 +39,11 @@ gulp.task("tslint", () => {
 gulp.task('ts', ['typings'], () => {
     var tsConfig = require('./tsconfig.json');
 
-    return gulp.src('client/**/*.ts')
-        .pipe(ts(tsConfig.compilerOptions))
-        .pipe(gulp.dest('dist/client'));
+    var tsResult = gulp.src('client/**/*.ts')
+    .pipe(ts(tsConfig.compilerOptions));
+    
+    return merge([
+        tsResult.dts.pipe(concat('index.ts')).pipe(gulp.dest('dist/definitions')),
+        tsResult.js.pipe(gulp.dest('dist/client'))
+        ]);
 })
