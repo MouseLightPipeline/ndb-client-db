@@ -1,8 +1,3 @@
-/// <reference path="../../typings/globals/jquery/index.d.ts"/>
-/// <reference path="../../typings/globals/angular/index.d.ts"/>
-/// <reference path="../../typings/globals/angular-resource/index.d.ts" />
-/// <reference path="dataService.ts" />
-
 interface ISample extends IApiNumberedResourceItem<ISample> {
     sampleDate: Date;
     tag: string;

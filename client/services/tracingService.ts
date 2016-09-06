@@ -1,11 +1,3 @@
-/// <reference path="../../typings/globals/jquery/index.d.ts"/>
-/// <reference path="../../typings/globals/angular/index.d.ts"/>
-/// <reference path="../../typings/globals/angular-resource/index.d.ts" />
-/// <reference path="../../typings/globals/es6-promise/index.d.ts" />
-/// <reference path="dataService.ts" />
-
-"use strict";
-
 interface ITracing extends ng.resource.IResource<ITracing>, IApiItem {
     filename: string;
     annotator: string;

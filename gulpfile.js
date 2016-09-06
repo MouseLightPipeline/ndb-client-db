@@ -39,11 +39,11 @@ gulp.task("tslint", () => {
 gulp.task('ts', ['typings'], () => {
     var tsConfig = require('./tsconfig.json');
 
-    var tsResult = gulp.src('client/**/*.ts')
+    var tsResult = gulp.src(['client/**/*.ts', 'typings/**/*.d.ts'])
     .pipe(ts(tsConfig.compilerOptions));
     
     return merge([
-        tsResult.dts.pipe(concat('index.ts')).pipe(gulp.dest('dist/definitions')),
+        tsResult.dts.pipe(concat('index.d.ts')).pipe(gulp.dest('dist/definitions')),
         tsResult.js.pipe(gulp.dest('dist/client'))
         ]);
 })

@@ -1,7 +1,31 @@
-/// <reference path="../../typings/globals/jquery/index.d.ts" />
-/// <reference path="../../typings/globals/angular/index.d.ts" />
-/// <reference path="../../typings/globals/angular-resource/index.d.ts" />
-/// <reference path="../../typings/globals/es6-promise/index.d.ts" />
+interface IBrainArea extends IApiNamedResourceItem<IBrainArea> {
+    structureId: number;
+    depth: number;
+    parentStructureId: number;
+    structureIdPath: string;
+    safeName: string;
+    acronym: string;
+}
+interface IBrainAreaResource extends IDataServiceResource<IBrainArea> {
+    queryForDepth(obj: any): any;
+    queryForParent(obj: any): any;
+}
+declare class BrainAreaDepthEntry {
+    depth: number;
+    areas: Array<IBrainArea>;
+    selectedAreaIndex: number;
+}
+declare class BrainAreaService extends DataService<IBrainArea> {
+    protected $rootScope: ng.IScope;
+    static $inject: string[];
+    constructor($resource: ng.resource.IResourceService, $rootScope: ng.IScope);
+    private service;
+    protected mapQueriedItem(obj: any): IBrainArea;
+    protected createResource(location: string): IBrainAreaResource;
+    brainAreasForDepth(depth: number): Promise<any>;
+    brainAreasForParent(parentId: number): Promise<any>;
+}
+
 interface IApiItem {
     id: string;
     createdAt: Date;
@@ -46,42 +70,6 @@ declare abstract class DataService<T extends IApiResourceItem<T>> {
     getDisplayNameForId(id: string, defaultValue?: string): string;
 }
 
-/// <reference path="../../typings/globals/jquery/index.d.ts" />
-/// <reference path="../../typings/globals/angular/index.d.ts" />
-/// <reference path="../../typings/globals/angular-resource/index.d.ts" />
-/// <reference path="dataService.d.ts" />
-interface IBrainArea extends IApiNamedResourceItem<IBrainArea> {
-    structureId: number;
-    depth: number;
-    parentStructureId: number;
-    structureIdPath: string;
-    safeName: string;
-    acronym: string;
-}
-interface IBrainAreaResource extends IDataServiceResource<IBrainArea> {
-    queryForDepth(obj: any): any;
-    queryForParent(obj: any): any;
-}
-declare class BrainAreaDepthEntry {
-    depth: number;
-    areas: Array<IBrainArea>;
-    selectedAreaIndex: number;
-}
-declare class BrainAreaService extends DataService<IBrainArea> {
-    protected $rootScope: ng.IScope;
-    static $inject: string[];
-    constructor($resource: ng.resource.IResourceService, $rootScope: ng.IScope);
-    private service;
-    protected mapQueriedItem(obj: any): IBrainArea;
-    protected createResource(location: string): IBrainAreaResource;
-    brainAreasForDepth(depth: number): Promise<any>;
-    brainAreasForParent(parentId: number): Promise<any>;
-}
-
-/// <reference path="../../typings/globals/jquery/index.d.ts" />
-/// <reference path="../../typings/globals/angular/index.d.ts" />
-/// <reference path="../../typings/globals/angular-resource/index.d.ts" />
-/// <reference path="dataService.d.ts" />
 interface IFluorophore extends IApiNamedResourceItem<IFluorophore> {
 }
 interface IFluorophoreResource extends IDataServiceResource<IFluorophore> {
@@ -94,10 +82,6 @@ declare class FluorophoreService extends DataService<IFluorophore> {
     fluorophores: any;
 }
 
-/// <reference path="../../typings/globals/jquery/index.d.ts" />
-/// <reference path="../../typings/globals/angular/index.d.ts" />
-/// <reference path="../../typings/globals/angular-resource/index.d.ts" />
-/// <reference path="dataService.d.ts" />
 interface IInjection extends IApiItem {
     sampleId: string;
     brainAreaId: string;
@@ -123,10 +107,6 @@ declare class InjectionService extends DataService<IInjectionResourceItem> {
     getDisplayName(item: IInjection, defaultValue?: string): string;
 }
 
-/// <reference path="../../typings/globals/jquery/index.d.ts" />
-/// <reference path="../../typings/globals/angular/index.d.ts" />
-/// <reference path="../../typings/globals/angular-resource/index.d.ts" />
-/// <reference path="dataService.d.ts" />
 interface IInjectionVirus extends IApiNamedResourceItem<IInjectionVirus> {
 }
 interface IInjectionVirusResource extends IDataServiceResource<IInjectionVirus> {
@@ -139,10 +119,6 @@ declare class InjectionVirusService extends DataService<IInjectionVirus> {
     injectionViruses: any;
 }
 
-/// <reference path="../../typings/globals/jquery/index.d.ts" />
-/// <reference path="../../typings/globals/angular/index.d.ts" />
-/// <reference path="../../typings/globals/angular-resource/index.d.ts" />
-/// <reference path="dataService.d.ts" />
 interface IMouseStrain extends IApiNamedResourceItem<IMouseStrain> {
 }
 interface IMouseStrainResource extends IDataServiceResource<IMouseStrain>, IApiItem {
@@ -155,10 +131,6 @@ declare class MouseStrainService extends DataService<IMouseStrain> {
     mouseStrains: any;
 }
 
-/// <reference path="../../typings/globals/jquery/index.d.ts" />
-/// <reference path="../../typings/globals/angular/index.d.ts" />
-/// <reference path="../../typings/globals/angular-resource/index.d.ts" />
-/// <reference path="dataService.d.ts" />
 interface INeuron extends IApiNumberedResourceItem<INeuron> {
     injectionId: string;
     brainAreaId: string;
@@ -182,10 +154,6 @@ declare class NeuronService extends DataService<INeuron> {
     getDisplayName(item: INeuron, defaultValue?: string): string;
 }
 
-/// <reference path="../../typings/globals/jquery/index.d.ts" />
-/// <reference path="../../typings/globals/angular/index.d.ts" />
-/// <reference path="../../typings/globals/angular-resource/index.d.ts" />
-/// <reference path="dataService.d.ts" />
 interface IRegistrationTransform extends IApiNamedResourceItem<IRegistrationTransform> {
 }
 interface IRegistrationTransformResource extends IDataServiceResource<IRegistrationTransform> {
@@ -198,10 +166,6 @@ declare class RegistrationTransformService extends DataService<IRegistrationTran
     transforms: any;
 }
 
-/// <reference path="../../typings/globals/jquery/index.d.ts" />
-/// <reference path="../../typings/globals/angular/index.d.ts" />
-/// <reference path="../../typings/globals/angular-resource/index.d.ts" />
-/// <reference path="dataService.d.ts" />
 interface ISample extends IApiNumberedResourceItem<ISample> {
     sampleDate: Date;
     tag: string;
@@ -223,10 +187,6 @@ declare class SampleService extends DataService<ISample> {
     getDisplayName(item: ISample, defaultValue?: string): string;
 }
 
-/// <reference path="../../typings/globals/jquery/index.d.ts" />
-/// <reference path="../../typings/globals/angular/index.d.ts" />
-/// <reference path="../../typings/globals/angular-resource/index.d.ts" />
-/// <reference path="dataService.d.ts" />
 interface IStructureIdentifier extends IApiNamedResourceItem<IStructureIdentifier> {
     value: number;
 }
@@ -240,10 +200,6 @@ declare class StructureIdentifierService extends DataService<IStructureIdentifie
     structures: any;
 }
 
-/// <reference path="../../typings/globals/jquery/index.d.ts" />
-/// <reference path="../../typings/globals/angular/index.d.ts" />
-/// <reference path="../../typings/globals/angular-resource/index.d.ts" />
-/// <reference path="dataService.d.ts" />
 interface ITracingNode extends ng.resource.IResource<ITracingNode>, IApiItem {
 }
 interface ITracingNodeResource extends IDataServiceResource<ITracingNode> {
@@ -259,11 +215,6 @@ declare class TracingNodeService extends DataService<ITracingNode> {
     nodesForStructure(structureId: string): Promise<Array<ITracingNode>>;
 }
 
-/// <reference path="../../typings/globals/jquery/index.d.ts" />
-/// <reference path="../../typings/globals/angular/index.d.ts" />
-/// <reference path="../../typings/globals/angular-resource/index.d.ts" />
-/// <reference path="../../typings/globals/es6-promise/index.d.ts" />
-/// <reference path="dataService.d.ts" />
 interface ITracing extends ng.resource.IResource<ITracing>, IApiItem {
     filename: string;
     annotator: string;
