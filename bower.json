@@ -1,0 +1,23 @@
+{
+  "name": "ndb-client-db",
+  "homepage": "https://github.com/TeravoxelTwoPhotonTomography/ndb-client-db",
+  "authors": [
+    "Patrick Edson <pedson@leapscientific.com>"
+  ],
+  "description": "Client datacontext for ndb applications",
+  "main": "datacontext.js",
+  "keywords": [
+    "janelia",
+    "mouselight",
+    "ndb"
+  ],
+  "license": "Janelia",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "typings",
+    "test",
+    "tests"
+  ]
+}
