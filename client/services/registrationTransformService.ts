@@ -6,12 +6,11 @@ interface IRegistrationTransformResource extends IDataServiceResource<IRegistrat
 
 class RegistrationTransformService extends DataService<IRegistrationTransform> {
     public static $inject = [
-        "$resource",
-        "$rootScope"
+        "$resource"
     ];
 
-    constructor($resource: ng.resource.IResourceService, protected $rootScope: ng.IScope) {
-        super($resource, $rootScope);
+    constructor($resource: ng.resource.IResourceService) {
+        super($resource);
     }
 
     protected createResource(location: string): IRegistrationTransformResource {

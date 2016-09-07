@@ -5,9 +5,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var FluorophoreService = (function (_super) {
     __extends(FluorophoreService, _super);
-    function FluorophoreService($resource, $rootScope) {
-        _super.call(this, $resource, $rootScope);
-        this.$rootScope = $rootScope;
+    function FluorophoreService($resource) {
+        _super.call(this, $resource);
     }
     FluorophoreService.prototype.createResource = function (location) {
         return this.$resource(location + "fluorophores/:id", { id: "@id" }, {});
@@ -20,8 +19,7 @@ var FluorophoreService = (function (_super) {
         configurable: true
     });
     FluorophoreService.$inject = [
-        "$resource",
-        "$rootScope"
+        "$resource"
     ];
     return FluorophoreService;
 }(DataService));

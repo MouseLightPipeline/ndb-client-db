@@ -20,12 +20,11 @@ class BrainAreaDepthEntry {
 
 class BrainAreaService extends DataService<IBrainArea> {
     public static $inject = [
-        "$resource",
-        "$rootScope"
+        "$resource"
     ];
 
-    constructor($resource: ng.resource.IResourceService, protected $rootScope: ng.IScope) {
-        super($resource, $rootScope);
+    constructor($resource: ng.resource.IResourceService) {
+        super($resource);
     }
 
     private get service(): IBrainAreaResource {

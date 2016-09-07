@@ -7,12 +7,11 @@ interface ITracingNodeResource extends IDataServiceResource<ITracingNode> {
 
 class TracingNodeService extends DataService<ITracingNode> {
     public static $inject = [
-        "$resource",
-        "$rootScope"
+        "$resource"
     ];
 
-    constructor($resource: ng.resource.IResourceService, protected $rootScope: ng.IScope) {
-        super($resource, $rootScope);
+    constructor($resource: ng.resource.IResourceService) {
+        super($resource);
     }
 
     private get service(): ITracingNodeResource {

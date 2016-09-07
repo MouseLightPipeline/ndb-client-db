@@ -5,9 +5,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var RegistrationTransformService = (function (_super) {
     __extends(RegistrationTransformService, _super);
-    function RegistrationTransformService($resource, $rootScope) {
-        _super.call(this, $resource, $rootScope);
-        this.$rootScope = $rootScope;
+    function RegistrationTransformService($resource) {
+        _super.call(this, $resource);
     }
     RegistrationTransformService.prototype.createResource = function (location) {
         return this.$resource(location + "registrationtransforms/:id", { id: "@id" }, {});
@@ -20,8 +19,7 @@ var RegistrationTransformService = (function (_super) {
         configurable: true
     });
     RegistrationTransformService.$inject = [
-        "$resource",
-        "$rootScope"
+        "$resource"
     ];
     return RegistrationTransformService;
 }(DataService));

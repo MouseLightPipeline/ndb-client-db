@@ -1,12 +1,12 @@
 {
-  "name": "ndb-shared",
+  "name": "ndb-client-db",
   "version": "1.0.0",
   "description": "",
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Patrick Edson <pedson@leapscientific.com>",
   "license": "Janelia",
   "dependencies": {},
   "devDependencies": {

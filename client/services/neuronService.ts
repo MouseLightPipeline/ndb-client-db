@@ -13,14 +13,13 @@ interface INeuronResource extends IDataServiceResource<INeuron> {
 
 class NeuronService extends DataService<INeuron> {
     public static $inject = [
-        "$resource",
-        "$rootScope"
+        "$resource"
     ];
 
     private neuronInjectionMap = {};
 
-    constructor($resource: ng.resource.IResourceService, protected $rootScope: ng.IScope) {
-        super($resource, $rootScope);
+    constructor($resource: ng.resource.IResourceService) {
+        super($resource);
     }
 
     protected registerNewItem(obj: IInjection): INeuron {

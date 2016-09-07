@@ -10,9 +10,8 @@ function lpad(n, width, z) {
 }
 var SampleService = (function (_super) {
     __extends(SampleService, _super);
-    function SampleService($resource, $rootScope) {
-        _super.call(this, $resource, $rootScope);
-        this.$rootScope = $rootScope;
+    function SampleService($resource) {
+        _super.call(this, $resource);
     }
     SampleService.prototype.mapQueriedItem = function (obj) {
         obj = _super.prototype.mapQueriedItem.call(this, obj);
@@ -43,8 +42,7 @@ var SampleService = (function (_super) {
         }
     };
     SampleService.$inject = [
-        "$resource",
-        "$rootScope"
+        "$resource"
     ];
     return SampleService;
 }(DataService));

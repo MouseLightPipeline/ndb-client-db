@@ -16,16 +16,14 @@ class InjectionService extends DataService<IInjectionResourceItem> {
 
     public static $inject = [
         "$resource",
-        "$rootScope",
         "injectionVirusService",
         "brainAreaService"
     ];
 
     private injectionSampleMap = {};
 
-    constructor($resource: ng.resource.IResourceService, protected $rootScope: ng.IScope,
-                private injectionVirusService: InjectionVirusService, private brainAreaService: BrainAreaService) {
-        super($resource, $rootScope);
+    constructor($resource: ng.resource.IResourceService, private injectionVirusService: InjectionVirusService, private brainAreaService: BrainAreaService) {
+        super($resource);
     }
 
     protected registerNewItem(obj: IInjection): IInjection {

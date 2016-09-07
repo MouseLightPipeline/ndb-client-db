@@ -16,9 +16,8 @@ declare class BrainAreaDepthEntry {
     selectedAreaIndex: number;
 }
 declare class BrainAreaService extends DataService<IBrainArea> {
-    protected $rootScope: ng.IScope;
     static $inject: string[];
-    constructor($resource: ng.resource.IResourceService, $rootScope: ng.IScope);
+    constructor($resource: ng.resource.IResourceService);
     private service;
     protected mapQueriedItem(obj: any): IBrainArea;
     protected createResource(location: string): IBrainAreaResource;
@@ -47,13 +46,12 @@ interface IDataServiceResource<T extends IApiResourceItem<T>> extends ng.resourc
 }
 declare abstract class DataService<T extends IApiResourceItem<T>> {
     protected $resource: ng.resource.IResourceService;
-    protected $rootScope: ng.IScope;
     static $inject: string[];
     resourcesAreAvailable: boolean;
     items: any;
     private apiLocation;
     protected dataSource: IDataServiceResource<T>;
-    constructor($resource: ng.resource.IResourceService, $rootScope: ng.IScope);
+    constructor($resource: ng.resource.IResourceService);
     protected abstract createResource(location: string): IDataServiceResource<T>;
     protected apiUrl: string;
     setLocation(resourceLocation: string): Promise<boolean>;
@@ -75,9 +73,8 @@ interface IFluorophore extends IApiNamedResourceItem<IFluorophore> {
 interface IFluorophoreResource extends IDataServiceResource<IFluorophore> {
 }
 declare class FluorophoreService extends DataService<IFluorophore> {
-    protected $rootScope: ng.IScope;
     static $inject: string[];
-    constructor($resource: ng.resource.IResourceService, $rootScope: ng.IScope);
+    constructor($resource: ng.resource.IResourceService);
     protected createResource(location: string): IFluorophoreResource;
     fluorophores: any;
 }
@@ -94,12 +91,11 @@ interface IInjectionResource extends IDataServiceResource<IInjectionResourceItem
     injectionsForSample(obj: any): Array<string>;
 }
 declare class InjectionService extends DataService<IInjectionResourceItem> {
-    protected $rootScope: ng.IScope;
     private injectionVirusService;
     private brainAreaService;
     static $inject: string[];
     private injectionSampleMap;
-    constructor($resource: ng.resource.IResourceService, $rootScope: ng.IScope, injectionVirusService: InjectionVirusService, brainAreaService: BrainAreaService);
+    constructor($resource: ng.resource.IResourceService, injectionVirusService: InjectionVirusService, brainAreaService: BrainAreaService);
     protected registerNewItem(obj: IInjection): IInjection;
     protected createResource(location: string): IInjectionResource;
     injectionsForSample(sampleId: string): Array<IInjection>;
@@ -112,9 +108,8 @@ interface IInjectionVirus extends IApiNamedResourceItem<IInjectionVirus> {
 interface IInjectionVirusResource extends IDataServiceResource<IInjectionVirus> {
 }
 declare class InjectionVirusService extends DataService<IInjectionVirus> {
-    protected $rootScope: ng.IScope;
     static $inject: string[];
-    constructor($resource: ng.resource.IResourceService, $rootScope: ng.IScope);
+    constructor($resource: ng.resource.IResourceService);
     protected createResource(location: string): IInjectionVirusResource;
     injectionViruses: any;
 }
@@ -124,9 +119,8 @@ interface IMouseStrain extends IApiNamedResourceItem<IMouseStrain> {
 interface IMouseStrainResource extends IDataServiceResource<IMouseStrain>, IApiItem {
 }
 declare class MouseStrainService extends DataService<IMouseStrain> {
-    protected $rootScope: ng.IScope;
     static $inject: string[];
-    constructor($resource: ng.resource.IResourceService, $rootScope: ng.IScope);
+    constructor($resource: ng.resource.IResourceService);
     protected createResource(location: string): IMouseStrainResource;
     mouseStrains: any;
 }
@@ -143,10 +137,9 @@ interface INeuron extends IApiNumberedResourceItem<INeuron> {
 interface INeuronResource extends IDataServiceResource<INeuron> {
 }
 declare class NeuronService extends DataService<INeuron> {
-    protected $rootScope: ng.IScope;
     static $inject: string[];
     private neuronInjectionMap;
-    constructor($resource: ng.resource.IResourceService, $rootScope: ng.IScope);
+    constructor($resource: ng.resource.IResourceService);
     protected registerNewItem(obj: IInjection): INeuron;
     protected createResource(location: string): INeuronResource;
     neuronsForInjection(injectionId: string): Array<IInjection>;
@@ -159,9 +152,8 @@ interface IRegistrationTransform extends IApiNamedResourceItem<IRegistrationTran
 interface IRegistrationTransformResource extends IDataServiceResource<IRegistrationTransform> {
 }
 declare class RegistrationTransformService extends DataService<IRegistrationTransform> {
-    protected $rootScope: ng.IScope;
     static $inject: string[];
-    constructor($resource: ng.resource.IResourceService, $rootScope: ng.IScope);
+    constructor($resource: ng.resource.IResourceService);
     protected createResource(location: string): IRegistrationTransformResource;
     transforms: any;
 }
@@ -178,9 +170,8 @@ interface ISampleResource extends IDataServiceResource<ISample> {
 }
 declare function lpad(n: any, width: any, z?: string): string;
 declare class SampleService extends DataService<ISample> {
-    protected $rootScope: ng.IScope;
     static $inject: string[];
-    constructor($resource: ng.resource.IResourceService, $rootScope: ng.IScope);
+    constructor($resource: ng.resource.IResourceService);
     protected mapQueriedItem(obj: any): ISample;
     protected createResource(location: string): ISampleResource;
     samples: any;
@@ -193,9 +184,8 @@ interface IStructureIdentifier extends IApiNamedResourceItem<IStructureIdentifie
 interface IStructureIdentifierResource extends IDataServiceResource<IStructureIdentifier> {
 }
 declare class StructureIdentifierService extends DataService<IStructureIdentifier> {
-    protected $rootScope: ng.IScope;
     static $inject: string[];
-    constructor($resource: ng.resource.IResourceService, $rootScope: ng.IScope);
+    constructor($resource: ng.resource.IResourceService);
     protected createResource(location: string): IStructureIdentifierResource;
     structures: any;
 }
@@ -206,9 +196,8 @@ interface ITracingNodeResource extends IDataServiceResource<ITracingNode> {
     nodesForStructure(obj: any): Array<ITracingNode>;
 }
 declare class TracingNodeService extends DataService<ITracingNode> {
-    protected $rootScope: ng.IScope;
     static $inject: string[];
-    constructor($resource: ng.resource.IResourceService, $rootScope: ng.IScope);
+    constructor($resource: ng.resource.IResourceService);
     private service;
     protected createResource(location: string): ITracingNodeResource;
     nodes: any;
@@ -225,10 +214,9 @@ interface ITracingResource extends IDataServiceResource<ITracing> {
     nodes(obj: any): ITracing;
 }
 declare class TracingService extends DataService<ITracing> {
-    protected $rootScope: ng.IScope;
     private $http;
     static $inject: string[];
-    constructor($resource: ng.resource.IResourceService, $rootScope: ng.IScope, $http: ng.IHttpService);
+    constructor($resource: ng.resource.IResourceService, $http: ng.IHttpService);
     private service;
     protected createResource(location: string): ITracingResource;
     tracings: any;

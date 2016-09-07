@@ -5,9 +5,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var MouseStrainService = (function (_super) {
     __extends(MouseStrainService, _super);
-    function MouseStrainService($resource, $rootScope) {
-        _super.call(this, $resource, $rootScope);
-        this.$rootScope = $rootScope;
+    function MouseStrainService($resource) {
+        _super.call(this, $resource);
     }
     MouseStrainService.prototype.createResource = function (location) {
         return this.$resource(location + "mousestrains/:id", { id: "@id" }, {});
@@ -20,8 +19,7 @@ var MouseStrainService = (function (_super) {
         configurable: true
     });
     MouseStrainService.$inject = [
-        "$resource",
-        "$rootScope"
+        "$resource"
     ];
     return MouseStrainService;
 }(DataService));

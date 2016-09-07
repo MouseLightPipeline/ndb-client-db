@@ -17,12 +17,11 @@ function lpad(n, width, z = "0"): string {
 
 class SampleService extends DataService<ISample> {
     public static $inject = [
-        "$resource",
-        "$rootScope"
+        "$resource"
     ];
 
-    constructor($resource: ng.resource.IResourceService, protected $rootScope: ng.IScope) {
-        super($resource, $rootScope);
+    constructor($resource: ng.resource.IResourceService) {
+        super($resource);
     }
 
     protected mapQueriedItem(obj: any): ISample {

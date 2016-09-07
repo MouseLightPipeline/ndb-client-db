@@ -27,8 +27,7 @@ interface IDataServiceResource<T extends IApiResourceItem<T>> extends ng.resourc
 
 abstract class DataService<T extends IApiResourceItem<T>> {
     public static $inject = [
-        "$resource",
-        "$rootScope"
+        "$resource"
     ];
 
     public resourcesAreAvailable: boolean = false;
@@ -39,7 +38,7 @@ abstract class DataService<T extends IApiResourceItem<T>> {
 
     protected dataSource: IDataServiceResource<T>;
 
-    constructor(protected $resource: ng.resource.IResourceService, protected $rootScope: ng.IScope) {
+    constructor(protected $resource: ng.resource.IResourceService) {
     }
 
     protected abstract createResource(location: string): IDataServiceResource<T>;

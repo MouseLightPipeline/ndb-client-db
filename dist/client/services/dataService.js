@@ -1,7 +1,6 @@
 var DataService = (function () {
-    function DataService($resource, $rootScope) {
+    function DataService($resource) {
         this.$resource = $resource;
-        this.$rootScope = $rootScope;
         this.resourcesAreAvailable = false;
         this.items = [];
         this.apiLocation = "";
@@ -108,8 +107,7 @@ var DataService = (function () {
         return item === null ? defaultValue : this.getDisplayName(item);
     };
     DataService.$inject = [
-        "$resource",
-        "$rootScope"
+        "$resource"
     ];
     return DataService;
 }());

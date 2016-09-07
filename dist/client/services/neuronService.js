@@ -5,9 +5,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var NeuronService = (function (_super) {
     __extends(NeuronService, _super);
-    function NeuronService($resource, $rootScope) {
-        _super.call(this, $resource, $rootScope);
-        this.$rootScope = $rootScope;
+    function NeuronService($resource) {
+        _super.call(this, $resource);
         this.neuronInjectionMap = {};
     }
     NeuronService.prototype.registerNewItem = function (obj) {
@@ -57,8 +56,7 @@ var NeuronService = (function (_super) {
         }
     };
     NeuronService.$inject = [
-        "$resource",
-        "$rootScope"
+        "$resource"
     ];
     return NeuronService;
 }(DataService));

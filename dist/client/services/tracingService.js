@@ -5,9 +5,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var TracingService = (function (_super) {
     __extends(TracingService, _super);
-    function TracingService($resource, $rootScope, $http) {
-        _super.call(this, $resource, $rootScope);
-        this.$rootScope = $rootScope;
+    function TracingService($resource, $http) {
+        _super.call(this, $resource);
         this.$http = $http;
     }
     Object.defineProperty(TracingService.prototype, "service", {
@@ -60,7 +59,6 @@ var TracingService = (function (_super) {
     };
     TracingService.$inject = [
         "$resource",
-        "$rootScope",
         "$http"
     ];
     return TracingService;

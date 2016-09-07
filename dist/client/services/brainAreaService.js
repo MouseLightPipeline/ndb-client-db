@@ -10,9 +10,8 @@ var BrainAreaDepthEntry = (function () {
 }());
 var BrainAreaService = (function (_super) {
     __extends(BrainAreaService, _super);
-    function BrainAreaService($resource, $rootScope) {
-        _super.call(this, $resource, $rootScope);
-        this.$rootScope = $rootScope;
+    function BrainAreaService($resource) {
+        _super.call(this, $resource);
     }
     Object.defineProperty(BrainAreaService.prototype, "service", {
         get: function () {
@@ -65,8 +64,7 @@ var BrainAreaService = (function (_super) {
         });
     };
     BrainAreaService.$inject = [
-        "$resource",
-        "$rootScope"
+        "$resource"
     ];
     return BrainAreaService;
 }(DataService));

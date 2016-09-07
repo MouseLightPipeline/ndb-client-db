@@ -5,9 +5,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var StructureIdentifierService = (function (_super) {
     __extends(StructureIdentifierService, _super);
-    function StructureIdentifierService($resource, $rootScope) {
-        _super.call(this, $resource, $rootScope);
-        this.$rootScope = $rootScope;
+    function StructureIdentifierService($resource) {
+        _super.call(this, $resource);
     }
     StructureIdentifierService.prototype.createResource = function (location) {
         return this.$resource(location + "structures/:id", { id: "@id" }, {});
@@ -20,8 +19,7 @@ var StructureIdentifierService = (function (_super) {
         configurable: true
     });
     StructureIdentifierService.$inject = [
-        "$resource",
-        "$rootScope"
+        "$resource"
     ];
     return StructureIdentifierService;
 }(DataService));

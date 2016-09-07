@@ -5,9 +5,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var InjectionService = (function (_super) {
     __extends(InjectionService, _super);
-    function InjectionService($resource, $rootScope, injectionVirusService, brainAreaService) {
-        _super.call(this, $resource, $rootScope);
-        this.$rootScope = $rootScope;
+    function InjectionService($resource, injectionVirusService, brainAreaService) {
+        _super.call(this, $resource);
         this.injectionVirusService = injectionVirusService;
         this.brainAreaService = brainAreaService;
         this.injectionSampleMap = {};
@@ -59,7 +58,6 @@ var InjectionService = (function (_super) {
     };
     InjectionService.$inject = [
         "$resource",
-        "$rootScope",
         "injectionVirusService",
         "brainAreaService"
     ];

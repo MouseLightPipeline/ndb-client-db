@@ -19,5 +19,8 @@
     "typings",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "eventemitter2": "^1.0.0"
+  }
 }

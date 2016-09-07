@@ -5,9 +5,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var InjectionVirusService = (function (_super) {
     __extends(InjectionVirusService, _super);
-    function InjectionVirusService($resource, $rootScope) {
-        _super.call(this, $resource, $rootScope);
-        this.$rootScope = $rootScope;
+    function InjectionVirusService($resource) {
+        _super.call(this, $resource);
     }
     InjectionVirusService.prototype.createResource = function (location) {
         return this.$resource(location + "viruses/:id", { id: "@id" }, {});
@@ -20,8 +19,7 @@ var InjectionVirusService = (function (_super) {
         configurable: true
     });
     InjectionVirusService.$inject = [
-        "$resource",
-        "$rootScope"
+        "$resource"
     ];
     return InjectionVirusService;
 }(DataService));
