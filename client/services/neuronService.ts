@@ -1,4 +1,4 @@
-interface INeuron extends IApiNumberedResourceItem<INeuron> {
+interface INeuron extends IApiItem, IApiIdNumberItem {
     injectionId: string;
     brainAreaId: string;
     tag: string;
@@ -8,10 +8,7 @@ interface INeuron extends IApiNumberedResourceItem<INeuron> {
     z: number;
 }
 
-interface INeuronResource extends IDataServiceResource<INeuron> {
-}
-
-class NeuronService extends DataService<INeuron> {
+class NeuronService extends NumberedItemDataService<INeuron> {
     public static $inject = [
         "$resource"
     ];
@@ -43,8 +40,8 @@ class NeuronService extends DataService<INeuron> {
         return item;
     }
 
-    protected createResource(location: string): INeuronResource {
-        return <INeuronResource>this.$resource(location + "neurons/:id", { id: "@id" });
+    protected resourcePath(): string {
+        return "neurons";
     }
 
     public neuronsForInjection(injectionId: string): Array<IInjection> {
@@ -58,8 +55,8 @@ class NeuronService extends DataService<INeuron> {
         return neurons;
     }
 
-    public get neurons(): any {
-        return this.items;
+    public get neurons(): Array<INeuron> {
+        return this._entityStore.items;
     }
 
     public getDisplayName(item: INeuron, defaultValue: string = ""): string {
@@ -68,7 +65,7 @@ class NeuronService extends DataService<INeuron> {
         }
 
         if (item.tag.length > 0) {
-            return item.idNumber.toString() + " " + item.tag ;
+            return item.idNumber.toString() + " " + item.tag;
         } else {
             return item.idNumber.toString();
         }

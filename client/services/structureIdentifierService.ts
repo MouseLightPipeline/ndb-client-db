@@ -1,11 +1,8 @@
-interface IStructureIdentifier extends IApiNamedResourceItem<IStructureIdentifier> {
+interface IStructureIdentifier extends  IApiNamedItem {
     value: number;
 }
 
-interface IStructureIdentifierResource extends IDataServiceResource<IStructureIdentifier> {
-}
-
-class StructureIdentifierService extends DataService<IStructureIdentifier> {
+class StructureIdentifierService extends NamedItemDataService<IStructureIdentifier> {
 
     public static $inject = [
         "$resource"
@@ -15,11 +12,11 @@ class StructureIdentifierService extends DataService<IStructureIdentifier> {
         super($resource);
     }
 
-    protected createResource(location: string): IStructureIdentifierResource {
-        return <IStructureIdentifierResource>this.$resource(location + "structures/:id", { id: "@id" }, {});
+    protected resourcePath(): string {
+        return "structures";
     }
 
-    public get structures(): any {
-        return this.items;
+    public get structures(): Array<IStructureIdentifier> {
+        return this._entityStore.items;
     }
 }

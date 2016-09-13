@@ -15,34 +15,28 @@ gulp.task('build', ['tslint', 'ts']);
 gulp.task('deploy', ['ts']);
 
 gulp.task('watch', ['build'], () => {
-    return gulp.watch(['client/**/*.*', '*.js', '*.json'], ['build']);
+    return gulp.watch(['client/**/*.ts', 'gulpfile.js'], ['build']);
 });
 
 gulp.task('clean', function () {
-    return del('dist/**/*');
+    return del(['dist/**/*', 'client/**/*.js', 'client/**/*.js.map', 'client/**/*.d.ts']);
 });
 
 gulp.task("typings", ['clean'], () => {
-    return gulp.src("typings.json")
-        .pipe(gulpTypings());
+    return gulp.src("./typings.json").pipe(gulpTypings());
 });
 
 gulp.task("tslint", () => {
     var tslintConfig = require('./tslint.json');
 
-    gulp.src('client/**/*.ts')
-        .pipe(tslint({configuration: tslintConfig}))
+    return gulp.src('client/**/*.ts').pipe(tslint({configuration: tslintConfig}))
         .pipe(tslint.report("verbose", {emitError: false}))
 });
 
 gulp.task('ts', ['typings'], () => {
     var tsConfig = require('./tsconfig.json');
 
-    var tsResult = gulp.src(['client/**/*.ts', 'src/**/*.ts', 'typings/**/*.d.ts'])
-        .pipe(ts(tsConfig.compilerOptions));
+    var tsResult = gulp.src(['client/**/*.ts', 'typings/**/*.d.ts']).pipe(ts(tsConfig.compilerOptions));
 
-    return merge([
-        tsResult.dts.pipe(concat('index.d.ts')).pipe(gulp.dest('dist/definitions')),
-        tsResult.js.pipe(gulp.dest('dist/client'))
-    ]);
+    return merge([tsResult.js.pipe(gulp.dest('dist')), tsResult.dts.pipe(concat('ndb-client-db.d.ts')).pipe(gulp.dest('dist'))]);
 });

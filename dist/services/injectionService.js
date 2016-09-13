@@ -11,6 +11,19 @@ var InjectionService = (function (_super) {
         this.brainAreaService = brainAreaService;
         this.injectionSampleMap = {};
     }
+    InjectionService.prototype.resourcePath = function () {
+        return "injections";
+    };
+    InjectionService.prototype.createCustomResourceMethods = function () {
+        return {
+            injectionsForSample: {
+                method: "GET",
+                url: location + "injections/sample/:id/",
+                params: { id: "@id" },
+                isArray: true
+            }
+        };
+    };
     InjectionService.prototype.registerNewItem = function (obj) {
         var item = _super.prototype.registerNewItem.call(this, obj);
         var list = this.injectionSampleMap[item.sampleId];
@@ -27,16 +40,6 @@ var InjectionService = (function (_super) {
         }
         return item;
     };
-    InjectionService.prototype.createResource = function (location) {
-        return this.$resource(location + "injections/:id", { id: "@id" }, {
-            injectionsForSample: {
-                method: "GET",
-                url: location + "injections/sample/:id/",
-                params: { id: "@id" },
-                isArray: true
-            }
-        });
-    };
     InjectionService.prototype.injectionsForSample = function (sampleId) {
         var injections = this.injectionSampleMap[sampleId];
         if (injections === undefined || injections === null) {
@@ -47,7 +50,7 @@ var InjectionService = (function (_super) {
     };
     Object.defineProperty(InjectionService.prototype, "injections", {
         get: function () {
-            return this.items;
+            return this._entityStore.items;
         },
         enumerable: true,
         configurable: true
@@ -63,3 +66,4 @@ var InjectionService = (function (_super) {
     ];
     return InjectionService;
 }(DataService));
+//# sourceMappingURL=injectionService.js.map

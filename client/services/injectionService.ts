@@ -5,14 +5,11 @@ interface IInjection extends IApiItem {
     fluorophoreId: string;
 }
 
-interface IInjectionResourceItem extends IInjection, IApiResourceItem<IInjectionResourceItem> {
-}
-
-interface IInjectionResource extends IDataServiceResource<IInjectionResourceItem> {
+interface IInjectionResource extends ng.resource.IResourceClass<ng.resource.IResource<IInjection>> {
     injectionsForSample(obj): Array<string>;
 }
 
-class InjectionService extends DataService<IInjectionResourceItem> {
+class InjectionService extends DataService<IInjection> {
 
     public static $inject = [
         "$resource",
@@ -24,6 +21,21 @@ class InjectionService extends DataService<IInjectionResourceItem> {
 
     constructor($resource: ng.resource.IResourceService, private injectionVirusService: InjectionVirusService, private brainAreaService: BrainAreaService) {
         super($resource);
+    }
+
+    protected resourcePath(): string {
+        return "injections";
+    }
+
+    protected createCustomResourceMethods(): any {
+        return {
+            injectionsForSample: {
+                method: "GET",
+                url: location + "injections/sample/:id/",
+                params: {id: "@id"},
+                isArray: true
+            }
+        };
     }
 
     protected registerNewItem(obj: IInjection): IInjection {
@@ -47,17 +59,6 @@ class InjectionService extends DataService<IInjectionResourceItem> {
         return item;
     }
 
-    protected createResource(location: string): IInjectionResource {
-        return <IInjectionResource>this.$resource(location + "injections/:id", {id: "@id"}, {
-            injectionsForSample: {
-                method: "GET",
-                url: location + "injections/sample/:id/",
-                params: {id: "@id"},
-                isArray: true
-            }
-        });
-    }
-
     public injectionsForSample(sampleId: string): Array<IInjection> {
         let injections = this.injectionSampleMap[sampleId];
 
@@ -70,8 +71,8 @@ class InjectionService extends DataService<IInjectionResourceItem> {
     }
 
 
-    public get injections(): any {
-        return this.items;
+    public get injections(): Array<IInjection> {
+        return this._entityStore.items;
     }
 
     public getDisplayName(item: IInjection, defaultValue: string = ""): string {

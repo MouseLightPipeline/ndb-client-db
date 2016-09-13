@@ -8,12 +8,12 @@ var FluorophoreService = (function (_super) {
     function FluorophoreService($resource) {
         _super.call(this, $resource);
     }
-    FluorophoreService.prototype.createResource = function (location) {
-        return this.$resource(location + "fluorophores/:id", { id: "@id" }, {});
+    FluorophoreService.prototype.resourcePath = function () {
+        return "fluorophores";
     };
     Object.defineProperty(FluorophoreService.prototype, "fluorophores", {
         get: function () {
-            return this.items;
+            return this._entityStore.items;
         },
         enumerable: true,
         configurable: true
@@ -22,4 +22,5 @@ var FluorophoreService = (function (_super) {
         "$resource"
     ];
     return FluorophoreService;
-}(DataService));
+}(NamedItemDataService));
+//# sourceMappingURL=fluorophoreService.js.map

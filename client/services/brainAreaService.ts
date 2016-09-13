@@ -1,4 +1,4 @@
-interface IBrainArea extends IApiNamedResourceItem<IBrainArea> {
+interface IBrainArea extends IApiNamedItem {
     structureId: number;
     depth: number;
     parentStructureId: number;
@@ -7,7 +7,7 @@ interface IBrainArea extends IApiNamedResourceItem<IBrainArea> {
     acronym: string;
 }
 
-interface IBrainAreaResource extends IDataServiceResource<IBrainArea> {
+interface IBrainAreaResource extends ng.resource.IResourceClass<ng.resource.IResource<IBrainArea>> {
     queryForDepth(obj): any;
     queryForParent(obj): any;
 }
@@ -18,7 +18,7 @@ class BrainAreaDepthEntry {
     selectedAreaIndex: number;
 }
 
-class BrainAreaService extends DataService<IBrainArea> {
+class BrainAreaService extends NamedItemDataService<IBrainArea> {
     public static $inject = [
         "$resource"
     ];
@@ -38,8 +38,12 @@ class BrainAreaService extends DataService<IBrainArea> {
         return obj;
     }
 
-    protected createResource(location: string): IBrainAreaResource {
-        return <IBrainAreaResource>this.$resource(location + "brainareas/:id", {id: "@id"}, {
+    protected resourcePath(): string {
+        return "brainareas";
+    }
+
+    protected createCustomResourceMethods(): any {
+        return {
             queryForDepth: {
                 method: "GET",
                 url: location + "brainareas/depth/:depth",
@@ -52,9 +56,27 @@ class BrainAreaService extends DataService<IBrainArea> {
                 params: {parentId: "@parentId"},
                 isArray: true
             }
-        });
+        };
     }
 
+    /*
+     protected createResource(location: string): IBrainAreaResource {
+     return <IBrainAreaResource>this.$resource(location + "brainareas/:id", {id: "@id"}, {
+     queryForDepth: {
+     method: "GET",
+     url: location + "brainareas/depth/:depth",
+     params: {depth: "@depth"},
+     isArray: true
+     },
+     queryForParent: {
+     method: "GET",
+     url: location + "brainareas/parent/:parentId",
+     params: {parentId: "@parentId"},
+     isArray: true
+     }
+     });
+     }
+     */
     public brainAreasForDepth(depth: number): Promise<any> {
         return new Promise<any>((resolve, reject) => {
             this.service.queryForDepth({depth: depth}).$promise.then((data) => {

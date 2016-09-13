@@ -15,19 +15,22 @@ var TracingNodeService = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    TracingNodeService.prototype.createResource = function (location) {
-        return this.$resource(location + "nodes/:id", { id: "@id" }, {
+    TracingNodeService.prototype.resourcePath = function () {
+        return "nodes";
+    };
+    TracingNodeService.prototype.createCustomResourceMethods = function () {
+        return {
             nodesForStructure: {
                 method: "GET",
                 url: location + "nodes/findByStructure/:id/",
                 params: { id: "@id" },
                 isArray: true
             }
-        });
+        };
     };
     Object.defineProperty(TracingNodeService.prototype, "nodes", {
         get: function () {
-            return this.items;
+            return this._entityStore.items;
         },
         enumerable: true,
         configurable: true
@@ -47,3 +50,4 @@ var TracingNodeService = (function (_super) {
     ];
     return TracingNodeService;
 }(DataService));
+//# sourceMappingURL=tracingNodeService.js.map

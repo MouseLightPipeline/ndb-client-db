@@ -1,11 +1,11 @@
-interface ITracing extends ng.resource.IResource<ITracing>, IApiItem {
+interface ITracing extends IApiItem {
     filename: string;
     annotator: string;
     lengthMicrometers: number;
     neuronId: string;
 }
 
-interface ITracingResource extends IDataServiceResource<ITracing> {
+interface ITracingResource extends ng.resource.IResourceClass<ng.resource.IResource<ITracing>> {
     nodes(obj): ITracing;
 }
 
@@ -23,19 +23,23 @@ class TracingService extends DataService<ITracing> {
         return <ITracingResource>this.dataSource;
     }
 
-    protected createResource(location: string): ITracingResource {
-        return <ITracingResource>this.$resource(location + "tracings/:id", { id: "@id" }, {
+    protected resourcePath(): string {
+        return "tracings";
+    }
+
+    protected createCustomResourceMethods(): any {
+        return {
             nodes: {
                 method: "GET",
                 url: location + "tracings/:id/nodes/",
-                params: { id: "@id" },
+                params: {id: "@id"},
                 isArray: true
             }
-        });
+        };
     }
 
-    public get tracings(): any {
-        return this.items;
+    public get tracings(): Array<ITracing> {
+        return this._entityStore.items;
     }
 
     public uploadSwcFile(theFile: any, tracingInfo: any): Promise<any> {
@@ -49,10 +53,10 @@ class TracingService extends DataService<ITracing> {
             this.$http.post<ITracing>(url, fd, {
                 params: tracingInfo,
                 transformRequest: angular.identity,
-                headers: { "Content-Type": undefined }
+                headers: {"Content-Type": undefined}
             }).then((result) => {
-                this.dataSource.get({ id: result.data.id }, (fullItem) => {
-                    this.items.push(fullItem);
+                this.dataSource.get({id: result.data.id}, (fullItem) => {
+                    this._entityStore.addItem(fullItem);
                     resolve(fullItem);
                 });
             }).catch((error) => {
@@ -60,9 +64,5 @@ class TracingService extends DataService<ITracing> {
                 reject(error);
             });
         });
-    }
-
-    public nodesForTracing(id: string) {
-        return this.service.nodes({ id: id }).$promise;
     }
 }

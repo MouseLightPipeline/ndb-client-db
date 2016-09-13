@@ -8,12 +8,12 @@ var StructureIdentifierService = (function (_super) {
     function StructureIdentifierService($resource) {
         _super.call(this, $resource);
     }
-    StructureIdentifierService.prototype.createResource = function (location) {
-        return this.$resource(location + "structures/:id", { id: "@id" }, {});
+    StructureIdentifierService.prototype.resourcePath = function () {
+        return "structures";
     };
     Object.defineProperty(StructureIdentifierService.prototype, "structures", {
         get: function () {
-            return this.items;
+            return this._entityStore.items;
         },
         enumerable: true,
         configurable: true
@@ -22,4 +22,5 @@ var StructureIdentifierService = (function (_super) {
         "$resource"
     ];
     return StructureIdentifierService;
-}(DataService));
+}(NamedItemDataService));
+//# sourceMappingURL=structureIdentifierService.js.map

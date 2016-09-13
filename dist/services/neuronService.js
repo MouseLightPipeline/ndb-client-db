@@ -25,8 +25,8 @@ var NeuronService = (function (_super) {
         }
         return item;
     };
-    NeuronService.prototype.createResource = function (location) {
-        return this.$resource(location + "neurons/:id", { id: "@id" });
+    NeuronService.prototype.resourcePath = function () {
+        return "neurons";
     };
     NeuronService.prototype.neuronsForInjection = function (injectionId) {
         var neurons = this.neuronInjectionMap[injectionId];
@@ -38,7 +38,7 @@ var NeuronService = (function (_super) {
     };
     Object.defineProperty(NeuronService.prototype, "neurons", {
         get: function () {
-            return this.items;
+            return this._entityStore.items;
         },
         enumerable: true,
         configurable: true
@@ -59,4 +59,5 @@ var NeuronService = (function (_super) {
         "$resource"
     ];
     return NeuronService;
-}(DataService));
+}(NumberedItemDataService));
+//# sourceMappingURL=neuronService.js.map

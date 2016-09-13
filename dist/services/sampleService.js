@@ -18,12 +18,12 @@ var SampleService = (function (_super) {
         obj.sampleDate = new Date(obj.sampleDate);
         return obj;
     };
-    SampleService.prototype.createResource = function (location) {
-        return this.$resource(location + "samples/:id", { id: "@id" }, {});
+    SampleService.prototype.resourcePath = function () {
+        return "samples";
     };
     Object.defineProperty(SampleService.prototype, "samples", {
         get: function () {
-            return this.items;
+            return this._entityStore.items;
         },
         enumerable: true,
         configurable: true
@@ -45,4 +45,5 @@ var SampleService = (function (_super) {
         "$resource"
     ];
     return SampleService;
-}(DataService));
+}(NumberedItemDataService));
+//# sourceMappingURL=sampleService.js.map

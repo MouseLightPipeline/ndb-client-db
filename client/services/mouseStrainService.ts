@@ -1,10 +1,8 @@
-interface IMouseStrain extends IApiNamedResourceItem<IMouseStrain> {
+interface IMouseStrain extends IApiNamedItem {
 }
 
-interface IMouseStrainResource extends IDataServiceResource<IMouseStrain>, IApiItem {
-}
 
-class MouseStrainService extends DataService<IMouseStrain> {
+class MouseStrainService extends NamedItemDataService<IMouseStrain> {
     public static $inject = [
         "$resource"
     ];
@@ -13,11 +11,11 @@ class MouseStrainService extends DataService<IMouseStrain> {
         super($resource);
     }
 
-    protected createResource(location: string): IMouseStrainResource {
-        return <IMouseStrainResource>this.$resource(location + "mousestrains/:id", { id: "@id" }, {});
+    protected resourcePath(): string {
+        return "mousestrains";
     }
 
-    public get mouseStrains(): any {
-        return this.items;
+    public get mouseStrains(): Array<IMouseStrain> {
+        return this._entityStore.items;
     }
 }
