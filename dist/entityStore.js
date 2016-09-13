@@ -84,4 +84,3 @@ var EntityStore = (function () {
     };
     return EntityStore;
 }());
-//# sourceMappingURL=entityStore.js.map

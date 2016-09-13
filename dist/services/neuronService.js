@@ -60,4 +60,3 @@ var NeuronService = (function (_super) {
     ];
     return NeuronService;
 }(NumberedItemDataService));
-//# sourceMappingURL=neuronService.js.map

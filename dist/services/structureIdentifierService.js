@@ -23,4 +23,3 @@ var StructureIdentifierService = (function (_super) {
     ];
     return StructureIdentifierService;
 }(NamedItemDataService));
-//# sourceMappingURL=structureIdentifierService.js.map

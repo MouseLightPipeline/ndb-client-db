@@ -46,4 +46,3 @@ var SampleService = (function (_super) {
     ];
     return SampleService;
 }(NumberedItemDataService));
-//# sourceMappingURL=sampleService.js.map

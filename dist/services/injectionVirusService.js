@@ -23,4 +23,3 @@ var InjectionVirusService = (function (_super) {
     ];
     return InjectionVirusService;
 }(NamedItemDataService));
-//# sourceMappingURL=injectionVirusService.js.map
