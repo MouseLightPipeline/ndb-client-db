@@ -1,6 +1,7 @@
 var EntityStore = (function () {
     function EntityStore(idKey) {
         if (idKey === void 0) { idKey = "id"; }
+        this._store = {};
         this._array = [];
         this._idKey = idKey;
     }
@@ -84,4 +85,3 @@ var EntityStore = (function () {
     };
     return EntityStore;
 }());
-//# sourceMappingURL=entityStore.js.map

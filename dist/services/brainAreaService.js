@@ -71,4 +71,3 @@ var BrainAreaService = (function (_super) {
     ];
     return BrainAreaService;
 }(NamedItemDataService));
-//# sourceMappingURL=brainAreaService.js.map

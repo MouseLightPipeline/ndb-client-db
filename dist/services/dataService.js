@@ -130,4 +130,3 @@ var NamedItemDataService = (function (_super) {
     };
     return NamedItemDataService;
 }(DataService));
-//# sourceMappingURL=dataService.js.map
