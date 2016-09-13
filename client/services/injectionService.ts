@@ -31,7 +31,7 @@ class InjectionService extends DataService<IInjection> {
         return {
             injectionsForSample: {
                 method: "GET",
-                url: location + "injections/sample/:id/",
+                url: this.apiUrl + "injections/sample/:id/",
                 params: {id: "@id"},
                 isArray: true
             }

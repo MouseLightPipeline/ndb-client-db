@@ -18,7 +18,7 @@ var InjectionService = (function (_super) {
         return {
             injectionsForSample: {
                 method: "GET",
-                url: location + "injections/sample/:id/",
+                url: this.apiUrl + "injections/sample/:id/",
                 params: { id: "@id" },
                 isArray: true
             }
@@ -66,3 +66,4 @@ var InjectionService = (function (_super) {
     ];
     return InjectionService;
 }(DataService));
+//# sourceMappingURL=injectionService.js.map

@@ -27,7 +27,7 @@ class TracingNodeService extends DataService<ITracingNode> {
         return {
             nodesForStructure: {
                 method: "GET",
-                url: location + "nodes/findByStructure/:id/",
+                url: this.apiUrl + "nodes/findByStructure/:id/",
                 params: {id: "@id"},
                 isArray: true
             }

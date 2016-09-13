@@ -46,13 +46,13 @@ class BrainAreaService extends NamedItemDataService<IBrainArea> {
         return {
             queryForDepth: {
                 method: "GET",
-                url: location + "brainareas/depth/:depth",
+                url: this.apiUrl + "brainareas/depth/:depth",
                 params: {depth: "@depth"},
                 isArray: true
             },
             queryForParent: {
                 method: "GET",
-                url: location + "brainareas/parent/:parentId",
+                url: this.apiUrl + "brainareas/parent/:parentId",
                 params: {parentId: "@parentId"},
                 isArray: true
             }

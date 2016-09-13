@@ -22,7 +22,7 @@ var TracingNodeService = (function (_super) {
         return {
             nodesForStructure: {
                 method: "GET",
-                url: location + "nodes/findByStructure/:id/",
+                url: this.apiUrl + "nodes/findByStructure/:id/",
                 params: { id: "@id" },
                 isArray: true
             }
@@ -50,3 +50,4 @@ var TracingNodeService = (function (_super) {
     ];
     return TracingNodeService;
 }(DataService));
+//# sourceMappingURL=tracingNodeService.js.map
