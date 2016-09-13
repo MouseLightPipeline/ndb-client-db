@@ -23,3 +23,4 @@ var RegistrationTransformService = (function (_super) {
     ];
     return RegistrationTransformService;
 }(NamedItemDataService));
+//# sourceMappingURL=registrationTransformService.js.map

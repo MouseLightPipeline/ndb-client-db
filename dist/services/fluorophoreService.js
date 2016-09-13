@@ -23,3 +23,4 @@ var FluorophoreService = (function (_super) {
     ];
     return FluorophoreService;
 }(NamedItemDataService));
+//# sourceMappingURL=fluorophoreService.js.map

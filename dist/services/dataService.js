@@ -58,7 +58,7 @@ var DataService = (function () {
     DataService.prototype.getDisplayNameForId = function (id, defaultValue) {
         if (defaultValue === void 0) { defaultValue = ""; }
         var item = this.find(id);
-        return item === null ? defaultValue : this.getDisplayName(item);
+        return item == null ? defaultValue : this.getDisplayName(item);
     };
     DataService.prototype.createCustomResourceMethods = function () {
         return {};
@@ -130,3 +130,4 @@ var NamedItemDataService = (function (_super) {
     };
     return NamedItemDataService;
 }(DataService));
+//# sourceMappingURL=dataService.js.map
