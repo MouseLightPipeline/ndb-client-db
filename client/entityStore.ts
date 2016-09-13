@@ -15,7 +15,7 @@ interface IEntityStore<T> {
 }
 
 class EntityStore<T> implements IEntityStore<T> {
-    private _store: {};
+    private _store: any = {};
     private _array: Array<T> = [];
     private _idKey: string;
 
