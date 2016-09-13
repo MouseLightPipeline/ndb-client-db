@@ -25,8 +25,11 @@ var BrainAreaService = (function (_super) {
         obj.updatedAt = new Date(obj.updatedAt);
         return obj;
     };
-    BrainAreaService.prototype.createResource = function (location) {
-        return this.$resource(location + "brainareas/:id", { id: "@id" }, {
+    BrainAreaService.prototype.resourcePath = function () {
+        return "brainareas";
+    };
+    BrainAreaService.prototype.createCustomResourceMethods = function () {
+        return {
             queryForDepth: {
                 method: "GET",
                 url: location + "brainareas/depth/:depth",
@@ -39,7 +42,7 @@ var BrainAreaService = (function (_super) {
                 params: { parentId: "@parentId" },
                 isArray: true
             }
-        });
+        };
     };
     BrainAreaService.prototype.brainAreasForDepth = function (depth) {
         var _this = this;
@@ -67,4 +70,5 @@ var BrainAreaService = (function (_super) {
         "$resource"
     ];
     return BrainAreaService;
-}(DataService));
+}(NamedItemDataService));
+//# sourceMappingURL=brainAreaService.js.map

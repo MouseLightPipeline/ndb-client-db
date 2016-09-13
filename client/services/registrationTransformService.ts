@@ -1,10 +1,7 @@
-interface IRegistrationTransform extends IApiNamedResourceItem<IRegistrationTransform> {
+interface IRegistrationTransform extends IApiNamedItem {
 }
 
-interface IRegistrationTransformResource extends IDataServiceResource<IRegistrationTransform> {
-}
-
-class RegistrationTransformService extends DataService<IRegistrationTransform> {
+class RegistrationTransformService extends NamedItemDataService<IRegistrationTransform> {
     public static $inject = [
         "$resource"
     ];
@@ -13,11 +10,11 @@ class RegistrationTransformService extends DataService<IRegistrationTransform> {
         super($resource);
     }
 
-    protected createResource(location: string): IRegistrationTransformResource {
-        return <IRegistrationTransformResource>this.$resource(location + "registrationtransforms/:id", { id: "@id" }, {});
+    protected resourcePath(): string {
+        return "registrationtransforms";
     }
 
-    public get transforms(): any {
-        return this.items;
+    public get transforms(): Array<IRegistrationTransform> {
+        return this._entityStore.items;
     }
 }

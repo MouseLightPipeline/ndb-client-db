@@ -8,12 +8,12 @@ var InjectionVirusService = (function (_super) {
     function InjectionVirusService($resource) {
         _super.call(this, $resource);
     }
-    InjectionVirusService.prototype.createResource = function (location) {
-        return this.$resource(location + "viruses/:id", { id: "@id" }, {});
+    InjectionVirusService.prototype.resourcePath = function () {
+        return "viruses";
     };
     Object.defineProperty(InjectionVirusService.prototype, "injectionViruses", {
         get: function () {
-            return this.items;
+            return this._entityStore.items;
         },
         enumerable: true,
         configurable: true
@@ -22,4 +22,5 @@ var InjectionVirusService = (function (_super) {
         "$resource"
     ];
     return InjectionVirusService;
-}(DataService));
+}(NamedItemDataService));
+//# sourceMappingURL=injectionVirusService.js.map

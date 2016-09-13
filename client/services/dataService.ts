@@ -4,112 +4,67 @@ interface IApiItem {
     updatedAt: Date;
 }
 
-interface IApiIdNumberItem {
+interface IApiIdNumberItem extends IApiItem {
     idNumber: number;
 }
 
-interface IApiNamedItem {
+interface IApiNamedItem extends IApiItem {
     name: string;
 }
 
-interface IApiResourceItem<T> extends ng.resource.IResource<T>, IApiItem {
+interface IMyResourceClass<T extends IApiItem> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
+    update(obj: any, data: T);
 }
 
-interface IApiNamedResourceItem<T> extends IApiResourceItem<T>, IApiNamedItem {
-}
-
-interface IApiNumberedResourceItem<T> extends IApiResourceItem<T>, IApiIdNumberItem {
-}
-
-
-interface IDataServiceResource<T extends IApiResourceItem<T>> extends ng.resource.IResourceClass<T> {
-}
-
-abstract class DataService<T extends IApiResourceItem<T>> {
+abstract class DataService<T extends IApiItem> {
     public static $inject = [
         "$resource"
     ];
 
-    public resourcesAreAvailable: boolean = false;
+    protected _entityStore: IEntityStore<T> = new EntityStore<T>();
 
-    public items: any = [];
+    public resourcesAreAvailable: boolean = false;
 
     private apiLocation: string = "";
 
-    protected dataSource: IDataServiceResource<T>;
+    protected dataSource: ng.resource.IResourceClass<ng.resource.IResource<T>>;
 
     constructor(protected $resource: ng.resource.IResourceService) {
     }
 
-    protected abstract createResource(location: string): IDataServiceResource<T>;
-
-    protected get apiUrl() {
-        return this.apiLocation;
-    }
-
-    public setLocation(resourceLocation: string): Promise<boolean> {
+    public setLocation(resourceLocation: string): Promise<void> {
         this.resourcesAreAvailable = false;
 
         this.apiLocation = resourceLocation;
 
-        this.dataSource = this.createResource(this.apiLocation);
+        this.createResource(this.apiLocation);
 
         return this.refreshData();
     }
 
-    protected mapQueriedItem(obj: any): IApiItem {
-        obj.createdAt = new Date(<string>obj.createdAt);
-        obj.updatedAt = new Date(<string>obj.updatedAt);
-
-        return obj;
-    }
-
-    protected registerNewItem(obj: IApiItem): IApiItem {
-        let item: IApiItem = this.mapQueriedItem(obj);
-
-        this[item.id] = item;
-
-        let index: number = this.items.findIndex((obj: IApiItem) => {
-            return obj.id === item.id;
-        });
-
-        if (index > -1) {
-            this.items[index] = item;
-        } else {
-            this.items.push(item);
-        }
-
-        return item;
-    }
-
-    protected registerNewItems(items) {
-        items = items.map((obj: IApiItem) => {
-            return this.registerNewItem(obj);
-        });
-
-        return items;
-    }
-
-    protected refreshDataWithCallback(fcn: any) {
-        this.dataSource.query(fcn);
-    }
-
-    public refreshData(): Promise<boolean> {
+    public refreshData(): Promise<void> {
         this.resourcesAreAvailable = false;
 
-        this.items = [];
+        this._entityStore.clear();
 
-        return new Promise<boolean>((resolve) => {
-            // Allows subclasses to do something other than a full query as the first call for data.
-            this.refreshDataWithCallback((data) => {
+        return new Promise<void>((resolve) => {
+            this.dataSource.query((data) => {
 
                 this.registerNewItems(data);
 
                 this.resourcesAreAvailable = true;
 
-                resolve(true);
+                resolve();
             });
         });
+    }
+
+    public update(data: T) {
+        let resourceClass: IMyResourceClass<T>;
+
+        resourceClass = <IMyResourceClass<T>>this.dataSource;
+
+        resourceClass.update({}, data);
     }
 
     public createItem(data): Promise<T> {
@@ -125,31 +80,8 @@ abstract class DataService<T extends IApiResourceItem<T>> {
         });
     }
 
-    public find(id: string, fcn = null): T {
-        let item: T;
-
-        if (fcn === null) {
-            item = this[id];
-        } else {
-            item = this.items.find(fcn);
-        }
-
-        if (item === undefined)
-            item = null;
-
-        return item;
-    }
-
-    public findWithIdNumber(id: number): T {
-        return this.find("", (obj: IApiIdNumberItem) => {
-            return obj.idNumber === id;
-        });
-    }
-
-    public findWithName(name: string): T {
-        return this.find("", (obj: IApiNamedItem) => {
-            return obj.name.toLowerCase() === name.toLowerCase();
-        });
+    public find(id: string): T {
+        return this._entityStore.findItem(id);
     }
 
     public getDisplayName(item: T, defaultValue: string = ""): string {
@@ -163,5 +95,98 @@ abstract class DataService<T extends IApiResourceItem<T>> {
         let item: T = this.find(id);
 
         return item === null ? defaultValue : this.getDisplayName(item);
+    }
+
+    // Concrete class entry points
+
+    protected abstract resourcePath(): string; // Required
+
+    protected createCustomResourceMethods(): any {
+        return {};
+    }
+
+    protected get apiUrl() {
+        return this.apiLocation;
+    }
+
+    protected mapQueriedItem(obj: any): T {
+        obj.createdAt = new Date(<string>obj.createdAt);
+        obj.updatedAt = new Date(<string>obj.updatedAt);
+
+        return obj;
+    }
+
+    protected registerNewItem(obj: any): T {
+        let item: T = this.mapQueriedItem(obj);
+
+        /*
+        this[item.id] = item;
+
+        let index: number = this.items.findIndex((obj: IApiItem) => {
+            return obj.id === item.id;
+        });
+
+        if (index > -1) {
+            this.items[index] = item;
+        } else {
+            this.items.push(item);
+        }
+        */
+
+
+        this._entityStore.addItem(item);
+
+        return item;
+
+    }
+
+    protected registerNewItems(items) {
+        items = items.map((obj: IApiItem) => {
+            return this.registerNewItem(obj);
+        });
+
+        return items;
+    }
+
+    protected where(fcn: WhereFunction<T>): T {
+        let items: Array<T> = this.whereAll(fcn);
+
+        return items.length > 0 ? items[0] : null;
+    }
+
+    protected whereAll(fcn: WhereFunction<T>): Array<T> {
+        return this._entityStore.where(fcn);
+    }
+
+    // Internal
+
+    private createResource(location: string) {
+        let obj: any = this.createCustomResourceMethods();
+
+        obj.update = {method: "PUT", url: location + "brainareas"};
+
+        this.dataSource = this.$resource(location + this.resourcePath() + "/:id", {id: "@id"}, obj);
+    }
+}
+
+abstract class NumberedItemDataService<T extends IApiIdNumberItem> extends DataService<T> {
+
+    public findWithIdNumber(id: number): T {
+        let item: any = this.where((obj: IApiIdNumberItem) => {
+            return obj.idNumber === id;
+        });
+
+        return <T>item;
+    }
+}
+
+abstract class NamedItemDataService<T extends IApiNamedItem> extends DataService<T> {
+
+    public findWithName(name: string): T {
+        let item: any = this.where((obj: IApiNamedItem) => {
+            return obj.name.toLowerCase() === name.toLowerCase();
+        });
+
+        return <T>item;
     }
 }

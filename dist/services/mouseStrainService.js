@@ -8,12 +8,12 @@ var MouseStrainService = (function (_super) {
     function MouseStrainService($resource) {
         _super.call(this, $resource);
     }
-    MouseStrainService.prototype.createResource = function (location) {
-        return this.$resource(location + "mousestrains/:id", { id: "@id" }, {});
+    MouseStrainService.prototype.resourcePath = function () {
+        return "mousestrains";
     };
     Object.defineProperty(MouseStrainService.prototype, "mouseStrains", {
         get: function () {
-            return this.items;
+            return this._entityStore.items;
         },
         enumerable: true,
         configurable: true
@@ -22,4 +22,5 @@ var MouseStrainService = (function (_super) {
         "$resource"
     ];
     return MouseStrainService;
-}(DataService));
+}(NamedItemDataService));
+//# sourceMappingURL=mouseStrainService.js.map

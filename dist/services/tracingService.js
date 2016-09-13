@@ -16,19 +16,22 @@ var TracingService = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    TracingService.prototype.createResource = function (location) {
-        return this.$resource(location + "tracings/:id", { id: "@id" }, {
+    TracingService.prototype.resourcePath = function () {
+        return "tracings";
+    };
+    TracingService.prototype.createCustomResourceMethods = function () {
+        return {
             nodes: {
                 method: "GET",
                 url: location + "tracings/:id/nodes/",
                 params: { id: "@id" },
                 isArray: true
             }
-        });
+        };
     };
     Object.defineProperty(TracingService.prototype, "tracings", {
         get: function () {
-            return this.items;
+            return this._entityStore.items;
         },
         enumerable: true,
         configurable: true
@@ -45,7 +48,7 @@ var TracingService = (function (_super) {
                 headers: { "Content-Type": undefined }
             }).then(function (result) {
                 _this.dataSource.get({ id: result.data.id }, function (fullItem) {
-                    _this.items.push(fullItem);
+                    _this._entityStore.addItem(fullItem);
                     resolve(fullItem);
                 });
             }).catch(function (error) {
@@ -54,12 +57,10 @@ var TracingService = (function (_super) {
             });
         });
     };
-    TracingService.prototype.nodesForTracing = function (id) {
-        return this.service.nodes({ id: id }).$promise;
-    };
     TracingService.$inject = [
         "$resource",
         "$http"
     ];
     return TracingService;
 }(DataService));
+//# sourceMappingURL=tracingService.js.map

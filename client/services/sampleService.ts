@@ -1,4 +1,4 @@
-interface ISample extends IApiNumberedResourceItem<ISample> {
+interface ISample extends IApiIdNumberItem {
     sampleDate: Date;
     tag: string;
     comment: string;
@@ -7,15 +7,12 @@ interface ISample extends IApiNumberedResourceItem<ISample> {
     injections: Array<string>;
 }
 
-interface ISampleResource extends IDataServiceResource<ISample> {
-}
-
 function lpad(n, width, z = "0"): string {
     n = n + "";
     return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
 }
 
-class SampleService extends DataService<ISample> {
+class SampleService extends NumberedItemDataService<ISample> {
     public static $inject = [
         "$resource"
     ];
@@ -32,12 +29,12 @@ class SampleService extends DataService<ISample> {
         return obj;
     }
 
-    protected createResource(location: string): ISampleResource {
-        return <ISampleResource>this.$resource(location + "samples/:id", { id: "@id" }, {});
+    protected resourcePath(): string {
+        return "samples";
     }
 
-    public get samples(): any {
-        return this.items;
+    public get samples(): Array<ISample> {
+        return this._entityStore.items;
     }
 
     public getDisplayName(item: ISample, defaultValue: string = ""): string {

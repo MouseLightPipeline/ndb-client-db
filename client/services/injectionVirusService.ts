@@ -1,10 +1,7 @@
-interface IInjectionVirus extends IApiNamedResourceItem<IInjectionVirus> {
+interface IInjectionVirus extends IApiNamedItem {
 }
 
-interface IInjectionVirusResource extends IDataServiceResource<IInjectionVirus> {
-}
-
-class InjectionVirusService extends DataService<IInjectionVirus> {
+class InjectionVirusService extends NamedItemDataService<IInjectionVirus> {
     public static $inject = [
         "$resource"
     ];
@@ -13,11 +10,11 @@ class InjectionVirusService extends DataService<IInjectionVirus> {
         super($resource);
     }
 
-    protected createResource(location: string): IInjectionVirusResource {
-        return <IInjectionVirusResource>this.$resource(location + "viruses/:id", {id: "@id"}, {});
+    protected resourcePath(): string {
+        return "viruses";
     }
 
-    public get injectionViruses(): any {
-        return this.items;
+    public get injectionViruses(): Array<IInjectionVirus> {
+        return this._entityStore.items;
     }
 }

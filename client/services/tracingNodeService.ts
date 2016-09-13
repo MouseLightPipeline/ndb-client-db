@@ -1,7 +1,7 @@
-interface ITracingNode extends ng.resource.IResource<ITracingNode>, IApiItem {
+interface ITracingNode extends IApiItem {
 }
 
-interface ITracingNodeResource extends IDataServiceResource<ITracingNode> {
+interface ITracingNodeResource extends ng.resource.IResourceClass<ng.resource.IResource<ITracingNode>> {
     nodesForStructure(obj): Array<ITracingNode>;
 }
 
@@ -19,19 +19,36 @@ class TracingNodeService extends DataService<ITracingNode> {
     }
 
 
-    protected createResource(location: string): ITracingNodeResource {
-        return <ITracingNodeResource>this.$resource(location + "nodes/:id", {id: "@id"}, {
+    protected resourcePath(): string {
+        return "nodes";
+    }
+
+    protected createCustomResourceMethods(): any {
+        return {
             nodesForStructure: {
                 method: "GET",
                 url: location + "nodes/findByStructure/:id/",
                 params: {id: "@id"},
                 isArray: true
             }
-        });
+        };
     }
 
-    public get nodes(): any {
-        return this.items;
+    /*
+     protected createResource(location: string): ITracingNodeResource {
+     return <ITracingNodeResource>this.$resource(location + "nodes/:id", {id: "@id"}, {
+     nodesForStructure: {
+     method: "GET",
+     url: location + "nodes/findByStructure/:id/",
+     params: {id: "@id"},
+     isArray: true
+     }
+     });
+     }
+     */
+
+    public get nodes(): Array<ITracingNode> {
+        return this._entityStore.items;
     }
 
     public nodesForStructure(structureId: string): Promise<Array<ITracingNode>> {

@@ -8,12 +8,12 @@ var RegistrationTransformService = (function (_super) {
     function RegistrationTransformService($resource) {
         _super.call(this, $resource);
     }
-    RegistrationTransformService.prototype.createResource = function (location) {
-        return this.$resource(location + "registrationtransforms/:id", { id: "@id" }, {});
+    RegistrationTransformService.prototype.resourcePath = function () {
+        return "registrationtransforms";
     };
     Object.defineProperty(RegistrationTransformService.prototype, "transforms", {
         get: function () {
-            return this.items;
+            return this._entityStore.items;
         },
         enumerable: true,
         configurable: true
@@ -22,4 +22,5 @@ var RegistrationTransformService = (function (_super) {
         "$resource"
     ];
     return RegistrationTransformService;
-}(DataService));
+}(NamedItemDataService));
+//# sourceMappingURL=registrationTransformService.js.map

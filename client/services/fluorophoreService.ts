@@ -1,10 +1,7 @@
-interface IFluorophore extends IApiNamedResourceItem<IFluorophore> {
+interface IFluorophore extends IApiNamedItem {
 }
 
-interface IFluorophoreResource extends IDataServiceResource<IFluorophore> {
-}
-
-class FluorophoreService extends DataService<IFluorophore> {
+class FluorophoreService extends NamedItemDataService<IFluorophore> {
 
     public static $inject = [
         "$resource"
@@ -14,11 +11,11 @@ class FluorophoreService extends DataService<IFluorophore> {
         super($resource);
     }
 
-    protected createResource(location: string): IFluorophoreResource {
-        return <IFluorophoreResource>this.$resource(location + "fluorophores/:id", {id: "@id"}, {});
+    protected resourcePath(): string {
+        return "fluorophores";
     }
 
-    public get fluorophores(): any {
-        return this.items;
+    public get fluorophores(): Array<IFluorophore> {
+        return this._entityStore.items;
     }
 }
