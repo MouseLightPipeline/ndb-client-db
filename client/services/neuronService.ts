@@ -1,8 +1,3 @@
-import ng = require("angular");
-
-import {IApiIdNumberItem, NumberedItemDataService} from "./dataService";
-import {IInjection} from "./injectionService";
-
 interface INeuron extends IApiIdNumberItem {
     injectionId: string;
     brainAreaId: string;

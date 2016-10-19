@@ -1,15 +1,11 @@
-import ng = require("angular");
-
-import {IApiItem, DataService} from "./dataService";
-
-export interface ITracingNode extends IApiItem {
+interface ITracingNode extends IApiItem {
 }
 
-export interface ITracingNodeResource extends ng.resource.IResourceClass<ng.resource.IResource<ITracingNode>> {
+interface ITracingNodeResource extends ng.resource.IResourceClass<ng.resource.IResource<ITracingNode>> {
     nodesForStructure(obj): Array<ITracingNode>;
 }
 
-export class TracingNodeService extends DataService<ITracingNode> {
+class TracingNodeService extends DataService<ITracingNode> {
     public static $inject = [
         "$resource"
     ];

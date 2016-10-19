@@ -1,12 +1,8 @@
-import ng = require("angular");
-
-import {IApiNamedItem, NamedItemDataService} from "./dataService";
-
-export interface IStructureIdentifier extends  IApiNamedItem {
+interface IStructureIdentifier extends  IApiNamedItem {
     value: number;
 }
 
-export class StructureIdentifierService extends NamedItemDataService<IStructureIdentifier> {
+class StructureIdentifierService extends NamedItemDataService<IStructureIdentifier> {
 
     public static $inject = [
         "$resource"

@@ -3,67 +3,63 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-define(["require", "exports", "angular", "./dataService"], function (require, exports, ng, dataService_1) {
-    "use strict";
-    var TracingService = (function (_super) {
-        __extends(TracingService, _super);
-        function TracingService($resource, $http) {
-            _super.call(this, $resource);
-            this.$http = $http;
-        }
-        Object.defineProperty(TracingService.prototype, "service", {
-            get: function () {
-                return this.dataSource;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        TracingService.prototype.resourcePath = function () {
-            return "tracings";
+var TracingService = (function (_super) {
+    __extends(TracingService, _super);
+    function TracingService($resource, $http) {
+        _super.call(this, $resource);
+        this.$http = $http;
+    }
+    Object.defineProperty(TracingService.prototype, "service", {
+        get: function () {
+            return this.dataSource;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    TracingService.prototype.resourcePath = function () {
+        return "tracings";
+    };
+    TracingService.prototype.createCustomResourceMethods = function () {
+        return {
+            nodes: {
+                method: "GET",
+                url: location + "tracings/:id/nodes/",
+                params: { id: "@id" },
+                isArray: true
+            }
         };
-        TracingService.prototype.createCustomResourceMethods = function () {
-            return {
-                nodes: {
-                    method: "GET",
-                    url: location + "tracings/:id/nodes/",
-                    params: { id: "@id" },
-                    isArray: true
-                }
-            };
-        };
-        Object.defineProperty(TracingService.prototype, "tracings", {
-            get: function () {
-                return this._entityStore.items;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        TracingService.prototype.uploadSwcFile = function (theFile, tracingInfo) {
-            var _this = this;
-            return new Promise(function (resolve, reject) {
-                var url = _this.apiUrl + "upload";
-                var fd = new FormData();
-                fd.append("contents", theFile);
-                _this.$http.post(url, fd, {
-                    params: tracingInfo,
-                    transformRequest: ng.identity,
-                    headers: { "Content-Type": undefined }
-                }).then(function (result) {
-                    _this.dataSource.get({ id: result.data.id }, function (fullItem) {
-                        _this._entityStore.addItem(fullItem);
-                        resolve(fullItem);
-                    });
-                }).catch(function (error) {
-                    console.log(error);
-                    reject(error);
+    };
+    Object.defineProperty(TracingService.prototype, "tracings", {
+        get: function () {
+            return this._entityStore.items;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    TracingService.prototype.uploadSwcFile = function (theFile, tracingInfo) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var url = _this.apiUrl + "upload";
+            var fd = new FormData();
+            fd.append("contents", theFile);
+            _this.$http.post(url, fd, {
+                params: tracingInfo,
+                transformRequest: ng.identity,
+                headers: { "Content-Type": undefined }
+            }).then(function (result) {
+                _this.dataSource.get({ id: result.data.id }, function (fullItem) {
+                    _this._entityStore.addItem(fullItem);
+                    resolve(fullItem);
                 });
+            }).catch(function (error) {
+                console.log(error);
+                reject(error);
             });
-        };
-        TracingService.$inject = [
-            "$resource",
-            "$http"
-        ];
-        return TracingService;
-    }(dataService_1.DataService));
-    exports.TracingService = TracingService;
-});
+        });
+    };
+    TracingService.$inject = [
+        "$resource",
+        "$http"
+    ];
+    return TracingService;
+}(DataService));

@@ -1,8 +1,4 @@
-import ng = require("angular");
-
-import {IApiIdNumberItem, NumberedItemDataService} from "./dataService";
-
-export interface ISample extends IApiIdNumberItem {
+interface ISample extends IApiIdNumberItem {
     sampleDate: Date;
     tag: string;
     comment: string;
@@ -11,7 +7,7 @@ export interface ISample extends IApiIdNumberItem {
     injections: Array<string>;
 }
 
-export class SampleService extends NumberedItemDataService<ISample> {
+class SampleService extends NumberedItemDataService<ISample> {
     public static $inject = [
         "$resource"
     ];

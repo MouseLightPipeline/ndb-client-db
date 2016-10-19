@@ -1,21 +1,15 @@
-import ng = require("angular");
-
-import {IApiItem, DataService} from "./dataService";
-import {InjectionVirusService} from "./injectionVirusService";
-import {BrainAreaService} from "./brainAreaService";
-
-export interface IInjection extends IApiItem {
+interface IInjection extends IApiItem {
     sampleId: string;
     brainAreaId: string;
     injectionVirusId: string;
     fluorophoreId: string;
 }
 
-export interface IInjectionResource extends ng.resource.IResourceClass<ng.resource.IResource<IInjection>> {
+interface IInjectionResource extends ng.resource.IResourceClass<ng.resource.IResource<IInjection>> {
     injectionsForSample(obj): Array<string>;
 }
 
-export class InjectionService extends DataService<IInjection> {
+class InjectionService extends DataService<IInjection> {
 
     public static $inject = [
         "$resource",
