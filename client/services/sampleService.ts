@@ -1,4 +1,4 @@
-import * as ng from "angular";
+import ng = require("angular");
 
 import {IApiIdNumberItem, NumberedItemDataService} from "./dataService";
 

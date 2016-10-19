@@ -1,4 +1,4 @@
-import * as ng from "angular";
+import ng = require("angular");
 
 export interface IApiItem {
     id: string;

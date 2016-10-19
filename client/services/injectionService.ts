@@ -1,4 +1,4 @@
-import * as ng from "angular";
+import ng = require("angular");
 
 import {IApiItem, DataService} from "./dataService";
 import {InjectionVirusService} from "./injectionVirusService";
