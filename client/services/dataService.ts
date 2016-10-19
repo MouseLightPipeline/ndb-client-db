@@ -1,22 +1,24 @@
-interface IApiItem {
+import * as ng from "angular";
+
+export interface IApiItem {
     id: string;
     createdAt: Date;
     updatedAt: Date;
 }
 
-interface IApiIdNumberItem extends IApiItem {
+export interface IApiIdNumberItem extends IApiItem {
     idNumber: number;
 }
 
-interface IApiNamedItem extends IApiItem {
+export interface IApiNamedItem extends IApiItem {
     name: string;
 }
 
-interface IMyResourceClass<T extends IApiItem> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
+export interface IMyResourceClass<T extends IApiItem> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
     update(obj: any, data: T);
 }
 
-abstract class DataService<T extends IApiItem> {
+export abstract class DataService<T extends IApiItem> {
     public static $inject = [
         "$resource"
     ];
@@ -169,7 +171,7 @@ abstract class DataService<T extends IApiItem> {
     }
 }
 
-abstract class NumberedItemDataService<T extends IApiIdNumberItem> extends DataService<T> {
+export abstract class NumberedItemDataService<T extends IApiIdNumberItem> extends DataService<T> {
 
     public findWithIdNumber(id: number): T {
         let item: any = this.where((obj: IApiIdNumberItem) => {
@@ -180,7 +182,7 @@ abstract class NumberedItemDataService<T extends IApiIdNumberItem> extends DataS
     }
 }
 
-abstract class NamedItemDataService<T extends IApiNamedItem> extends DataService<T> {
+export abstract class NamedItemDataService<T extends IApiNamedItem> extends DataService<T> {
 
     public findWithName(name: string): T {
         let item: any = this.where((obj: IApiNamedItem) => {

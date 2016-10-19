@@ -1,4 +1,9 @@
-interface INeuron extends IApiItem, IApiIdNumberItem {
+import * as ng from "angular";
+
+import {IApiIdNumberItem, NumberedItemDataService} from "./dataService";
+import {IInjection} from "./injectionService";
+
+interface INeuron extends IApiIdNumberItem {
     injectionId: string;
     brainAreaId: string;
     tag: string;

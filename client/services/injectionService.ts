@@ -1,15 +1,21 @@
-interface IInjection extends IApiItem {
+import * as ng from "angular";
+
+import {IApiItem, DataService} from "./dataService";
+import {InjectionVirusService} from "./injectionVirusService";
+import {BrainAreaService} from "./brainAreaService";
+
+export interface IInjection extends IApiItem {
     sampleId: string;
     brainAreaId: string;
     injectionVirusId: string;
     fluorophoreId: string;
 }
 
-interface IInjectionResource extends ng.resource.IResourceClass<ng.resource.IResource<IInjection>> {
+export interface IInjectionResource extends ng.resource.IResourceClass<ng.resource.IResource<IInjection>> {
     injectionsForSample(obj): Array<string>;
 }
 
-class InjectionService extends DataService<IInjection> {
+export class InjectionService extends DataService<IInjection> {
 
     public static $inject = [
         "$resource",

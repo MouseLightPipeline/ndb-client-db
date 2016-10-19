@@ -1,3 +1,4 @@
+/// <reference types="angular-resource" />
 interface WhereFunction<T> {
     (obj: T): boolean;
 }
@@ -23,14 +24,18 @@ declare class EntityStore<T> implements IEntityStore<T> {
     removeItem(item: T): T;
     removeItems(items: Array<T>): Array<T>;
     where(fcn: WhereFunction<T>): Array<T>;
-    items: Array<T>;
+    readonly items: Array<T>;
     private findObject(item);
     private getKey(item);
     private insertItem(item);
     private deleteItem(item);
 }
 
-interface IBrainArea extends IApiNamedItem {
+/// <reference types="angular-resource" />
+/// <reference types="es6-promise" />
+import * as ng from "angular";
+import { IApiNamedItem, NamedItemDataService } from "./dataService";
+export interface IBrainArea extends IApiNamedItem {
     structureId: number;
     depth: number;
     parentStructureId: number;
@@ -38,19 +43,19 @@ interface IBrainArea extends IApiNamedItem {
     safeName: string;
     acronym: string;
 }
-interface IBrainAreaResource extends ng.resource.IResourceClass<ng.resource.IResource<IBrainArea>> {
+export interface IBrainAreaResource extends ng.resource.IResourceClass<ng.resource.IResource<IBrainArea>> {
     queryForDepth(obj: any): any;
     queryForParent(obj: any): any;
 }
-declare class BrainAreaDepthEntry {
+export declare class BrainAreaDepthEntry {
     depth: number;
     areas: Array<IBrainArea>;
     selectedAreaIndex: number;
 }
-declare class BrainAreaService extends NamedItemDataService<IBrainArea> {
+export declare class BrainAreaService extends NamedItemDataService<IBrainArea> {
     static $inject: string[];
     constructor($resource: ng.resource.IResourceService);
-    private service;
+    private readonly service;
     protected mapQueriedItem(obj: any): IBrainArea;
     protected resourcePath(): string;
     protected createCustomResourceMethods(): any;
@@ -58,21 +63,24 @@ declare class BrainAreaService extends NamedItemDataService<IBrainArea> {
     brainAreasForParent(parentId: number): Promise<any>;
 }
 
-interface IApiItem {
+/// <reference types="angular-resource" />
+/// <reference types="es6-promise" />
+import * as ng from "angular";
+export interface IApiItem {
     id: string;
     createdAt: Date;
     updatedAt: Date;
 }
-interface IApiIdNumberItem extends IApiItem {
+export interface IApiIdNumberItem extends IApiItem {
     idNumber: number;
 }
-interface IApiNamedItem extends IApiItem {
+export interface IApiNamedItem extends IApiItem {
     name: string;
 }
-interface IMyResourceClass<T extends IApiItem> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
+export interface IMyResourceClass<T extends IApiItem> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
     update(obj: any, data: T): any;
 }
-declare abstract class DataService<T extends IApiItem> {
+export declare abstract class DataService<T extends IApiItem> {
     protected $resource: ng.resource.IResourceService;
     static $inject: string[];
     protected _entityStore: IEntityStore<T>;
@@ -89,7 +97,7 @@ declare abstract class DataService<T extends IApiItem> {
     getDisplayNameForId(id: string, defaultValue?: string): string;
     protected abstract resourcePath(): string;
     protected createCustomResourceMethods(): any;
-    protected apiUrl: string;
+    protected readonly apiUrl: string;
     protected mapQueriedItem(obj: any): T;
     protected registerNewItem(obj: any): T;
     protected registerNewItems(items: any): any;
@@ -97,32 +105,40 @@ declare abstract class DataService<T extends IApiItem> {
     protected whereAll(fcn: WhereFunction<T>): Array<T>;
     private createResource(location);
 }
-declare abstract class NumberedItemDataService<T extends IApiIdNumberItem> extends DataService<T> {
+export declare abstract class NumberedItemDataService<T extends IApiIdNumberItem> extends DataService<T> {
     findWithIdNumber(id: number): T;
 }
-declare abstract class NamedItemDataService<T extends IApiNamedItem> extends DataService<T> {
+export declare abstract class NamedItemDataService<T extends IApiNamedItem> extends DataService<T> {
     findWithName(name: string): T;
 }
 
-interface IFluorophore extends IApiNamedItem {
+/// <reference types="angular-resource" />
+import * as ng from "angular";
+import { IApiNamedItem, NamedItemDataService } from "./dataService";
+export interface IFluorophore extends IApiNamedItem {
 }
-declare class FluorophoreService extends NamedItemDataService<IFluorophore> {
+export declare class FluorophoreService extends NamedItemDataService<IFluorophore> {
     static $inject: string[];
     constructor($resource: ng.resource.IResourceService);
     protected resourcePath(): string;
-    fluorophores: Array<IFluorophore>;
+    readonly fluorophores: Array<IFluorophore>;
 }
 
-interface IInjection extends IApiItem {
+/// <reference types="angular-resource" />
+import * as ng from "angular";
+import { IApiItem, DataService } from "./dataService";
+import { InjectionVirusService } from "./injectionVirusService";
+import { BrainAreaService } from "./brainAreaService";
+export interface IInjection extends IApiItem {
     sampleId: string;
     brainAreaId: string;
     injectionVirusId: string;
     fluorophoreId: string;
 }
-interface IInjectionResource extends ng.resource.IResourceClass<ng.resource.IResource<IInjection>> {
+export interface IInjectionResource extends ng.resource.IResourceClass<ng.resource.IResource<IInjection>> {
     injectionsForSample(obj: any): Array<string>;
 }
-declare class InjectionService extends DataService<IInjection> {
+export declare class InjectionService extends DataService<IInjection> {
     private injectionVirusService;
     private brainAreaService;
     static $inject: string[];
@@ -132,58 +148,51 @@ declare class InjectionService extends DataService<IInjection> {
     protected createCustomResourceMethods(): any;
     protected registerNewItem(obj: IInjection): IInjection;
     injectionsForSample(sampleId: string): Array<IInjection>;
-    injections: Array<IInjection>;
+    readonly injections: Array<IInjection>;
     getDisplayName(item: IInjection, defaultValue?: string): string;
 }
 
-interface IInjectionVirus extends IApiNamedItem {
+/// <reference types="angular-resource" />
+import * as ng from "angular";
+import { IApiNamedItem, NamedItemDataService } from "./dataService";
+export interface IInjectionVirus extends IApiNamedItem {
 }
-declare class InjectionVirusService extends NamedItemDataService<IInjectionVirus> {
+export declare class InjectionVirusService extends NamedItemDataService<IInjectionVirus> {
     static $inject: string[];
     constructor($resource: ng.resource.IResourceService);
     protected resourcePath(): string;
-    injectionViruses: Array<IInjectionVirus>;
+    readonly injectionViruses: Array<IInjectionVirus>;
 }
 
-interface IMouseStrain extends IApiNamedItem {
+/// <reference types="angular-resource" />
+import * as ng from "angular";
+import { IApiNamedItem, NamedItemDataService } from "./dataService";
+export interface IMouseStrain extends IApiNamedItem {
 }
-declare class MouseStrainService extends NamedItemDataService<IMouseStrain> {
+export declare class MouseStrainService extends NamedItemDataService<IMouseStrain> {
     static $inject: string[];
     constructor($resource: ng.resource.IResourceService);
     protected resourcePath(): string;
-    mouseStrains: Array<IMouseStrain>;
+    readonly mouseStrains: Array<IMouseStrain>;
 }
 
-interface INeuron extends IApiItem, IApiIdNumberItem {
-    injectionId: string;
-    brainAreaId: string;
-    tag: string;
-    keywords: string;
-    x: number;
-    y: number;
-    z: number;
-}
-declare class NeuronService extends NumberedItemDataService<INeuron> {
-    static $inject: string[];
-    private neuronInjectionMap;
-    constructor($resource: ng.resource.IResourceService);
-    protected registerNewItem(obj: IInjection): INeuron;
-    protected resourcePath(): string;
-    neuronsForInjection(injectionId: string): Array<IInjection>;
-    neurons: Array<INeuron>;
-    getDisplayName(item: INeuron, defaultValue?: string): string;
-}
 
-interface IRegistrationTransform extends IApiNamedItem {
+/// <reference types="angular-resource" />
+import * as ng from "angular";
+import { IApiNamedItem, NamedItemDataService } from "./dataService";
+export interface IRegistrationTransform extends IApiNamedItem {
 }
-declare class RegistrationTransformService extends NamedItemDataService<IRegistrationTransform> {
+export declare class RegistrationTransformService extends NamedItemDataService<IRegistrationTransform> {
     static $inject: string[];
     constructor($resource: ng.resource.IResourceService);
     protected resourcePath(): string;
-    transforms: Array<IRegistrationTransform>;
+    readonly transforms: Array<IRegistrationTransform>;
 }
 
-interface ISample extends IApiIdNumberItem {
+/// <reference types="angular-resource" />
+import * as ng from "angular";
+import { IApiIdNumberItem, NumberedItemDataService } from "./dataService";
+export interface ISample extends IApiIdNumberItem {
     sampleDate: Date;
     tag: string;
     comment: string;
@@ -191,57 +200,68 @@ interface ISample extends IApiIdNumberItem {
     registrationTransformId: string;
     injections: Array<string>;
 }
-declare function lpad(n: any, width: any, z?: string): string;
-declare class SampleService extends NumberedItemDataService<ISample> {
+export declare class SampleService extends NumberedItemDataService<ISample> {
     static $inject: string[];
     constructor($resource: ng.resource.IResourceService);
     protected mapQueriedItem(obj: any): ISample;
     protected resourcePath(): string;
-    samples: Array<ISample>;
+    readonly samples: Array<ISample>;
     getDisplayName(item: ISample, defaultValue?: string): string;
 }
 
-interface IStructureIdentifier extends IApiNamedItem {
+/// <reference types="angular-resource" />
+import * as ng from "angular";
+import { IApiNamedItem, NamedItemDataService } from "./dataService";
+export interface IStructureIdentifier extends IApiNamedItem {
     value: number;
 }
-declare class StructureIdentifierService extends NamedItemDataService<IStructureIdentifier> {
+export declare class StructureIdentifierService extends NamedItemDataService<IStructureIdentifier> {
     static $inject: string[];
     constructor($resource: ng.resource.IResourceService);
     protected resourcePath(): string;
-    structures: Array<IStructureIdentifier>;
+    readonly structures: Array<IStructureIdentifier>;
 }
 
-interface ITracingNode extends IApiItem {
+/// <reference types="angular-resource" />
+/// <reference types="es6-promise" />
+import * as ng from "angular";
+import { IApiItem, DataService } from "./dataService";
+export interface ITracingNode extends IApiItem {
 }
-interface ITracingNodeResource extends ng.resource.IResourceClass<ng.resource.IResource<ITracingNode>> {
+export interface ITracingNodeResource extends ng.resource.IResourceClass<ng.resource.IResource<ITracingNode>> {
     nodesForStructure(obj: any): Array<ITracingNode>;
 }
-declare class TracingNodeService extends DataService<ITracingNode> {
+export declare class TracingNodeService extends DataService<ITracingNode> {
     static $inject: string[];
     constructor($resource: ng.resource.IResourceService);
-    private service;
+    private readonly service;
     protected resourcePath(): string;
     protected createCustomResourceMethods(): any;
-    nodes: Array<ITracingNode>;
+    readonly nodes: Array<ITracingNode>;
     nodesForStructure(structureId: string): Promise<Array<ITracingNode>>;
 }
 
-interface ITracing extends IApiItem {
+/// <reference types="angular-resource" />
+/// <reference types="angular" />
+/// <reference types="es6-promise" />
+import * as ng from "angular";
+import { IApiItem, DataService } from "./dataService";
+export interface ITracing extends IApiItem {
     filename: string;
     annotator: string;
     lengthMicrometers: number;
     neuronId: string;
 }
-interface ITracingResource extends ng.resource.IResourceClass<ng.resource.IResource<ITracing>> {
+export interface ITracingResource extends ng.resource.IResourceClass<ng.resource.IResource<ITracing>> {
     nodes(obj: any): ITracing;
 }
-declare class TracingService extends DataService<ITracing> {
+export declare class TracingService extends DataService<ITracing> {
     private $http;
     static $inject: string[];
     constructor($resource: ng.resource.IResourceService, $http: ng.IHttpService);
-    private service;
+    private readonly service;
     protected resourcePath(): string;
     protected createCustomResourceMethods(): any;
-    tracings: Array<ITracing>;
+    readonly tracings: Array<ITracing>;
     uploadSwcFile(theFile: any, tracingInfo: any): Promise<any>;
 }

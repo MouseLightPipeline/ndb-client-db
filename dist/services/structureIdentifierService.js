@@ -3,24 +3,27 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var StructureIdentifierService = (function (_super) {
-    __extends(StructureIdentifierService, _super);
-    function StructureIdentifierService($resource) {
-        _super.call(this, $resource);
-    }
-    StructureIdentifierService.prototype.resourcePath = function () {
-        return "structures";
-    };
-    Object.defineProperty(StructureIdentifierService.prototype, "structures", {
-        get: function () {
-            return this._entityStore.items;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    StructureIdentifierService.$inject = [
-        "$resource"
-    ];
-    return StructureIdentifierService;
-}(NamedItemDataService));
-//# sourceMappingURL=structureIdentifierService.js.map
+define(["require", "exports", "./dataService"], function (require, exports, dataService_1) {
+    "use strict";
+    var StructureIdentifierService = (function (_super) {
+        __extends(StructureIdentifierService, _super);
+        function StructureIdentifierService($resource) {
+            _super.call(this, $resource);
+        }
+        StructureIdentifierService.prototype.resourcePath = function () {
+            return "structures";
+        };
+        Object.defineProperty(StructureIdentifierService.prototype, "structures", {
+            get: function () {
+                return this._entityStore.items;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        StructureIdentifierService.$inject = [
+            "$resource"
+        ];
+        return StructureIdentifierService;
+    }(dataService_1.NamedItemDataService));
+    exports.StructureIdentifierService = StructureIdentifierService;
+});

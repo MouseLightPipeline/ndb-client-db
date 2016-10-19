@@ -1,7 +1,11 @@
-interface IRegistrationTransform extends IApiNamedItem {
+import * as ng from "angular";
+
+import {IApiNamedItem, NamedItemDataService} from "./dataService";
+
+export interface IRegistrationTransform extends IApiNamedItem {
 }
 
-class RegistrationTransformService extends NamedItemDataService<IRegistrationTransform> {
+export class RegistrationTransformService extends NamedItemDataService<IRegistrationTransform> {
     public static $inject = [
         "$resource"
     ];

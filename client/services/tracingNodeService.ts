@@ -1,11 +1,15 @@
-interface ITracingNode extends IApiItem {
+import * as ng from "angular";
+
+import {IApiItem, DataService} from "./dataService";
+
+export interface ITracingNode extends IApiItem {
 }
 
-interface ITracingNodeResource extends ng.resource.IResourceClass<ng.resource.IResource<ITracingNode>> {
+export interface ITracingNodeResource extends ng.resource.IResourceClass<ng.resource.IResource<ITracingNode>> {
     nodesForStructure(obj): Array<ITracingNode>;
 }
 
-class TracingNodeService extends DataService<ITracingNode> {
+export class TracingNodeService extends DataService<ITracingNode> {
     public static $inject = [
         "$resource"
     ];
