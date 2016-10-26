@@ -18,18 +18,19 @@ module.exports = function (config) {
             'node_modules/angular/angular.js',
             'node_modules/angular-resource/angular-resource.js',
             'node_modules/angular-mocks/angular-mocks.js',
-            './dist/ndb-client.js',
-            './test/**/testApp.js',
+            './dist/entityStore.js',
+            './dist/dataService.js',
+            './dist/brainAreaService.js',
+            'test/testApp.js',
             './test/**/*.spec.js'
         ],
 
+
+        preprocessors: {},
+
+
         // list of files to exclude
         exclude: [],
-
-
-        // preprocess matching files before serving them to the browser
-        // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-        preprocessors: {},
 
 
         // test results reporter to use
@@ -68,4 +69,4 @@ module.exports = function (config) {
         // how many browser should be started simultaneous
         concurrency: Infinity
     })
-}
+};

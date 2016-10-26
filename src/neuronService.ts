@@ -1,9 +1,4 @@
-import ng = require("angular");
-
-import {IApiIdNumberItem, NumberedItemDataService} from "./dataService";
-import {IInjection} from "./injectionService";
-
-export interface INeuron extends IApiIdNumberItem {
+interface INeuron extends IApiIdNumberItem {
     injectionId: string;
     brainAreaId: string;
     tag: string;
@@ -17,7 +12,7 @@ interface INeuronSampleMap {
     [key: string]: Array<INeuron>;
 }
 
-export class NeuronService extends NumberedItemDataService<INeuron> {
+class NeuronService extends NumberedItemDataService<INeuron> {
     public static $inject = [
         "$resource"
     ];

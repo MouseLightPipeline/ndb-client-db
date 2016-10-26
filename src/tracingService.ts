@@ -1,8 +1,4 @@
-import ng = require("angular");
-
-import {IApiItem, DataService} from "./dataService";
-
-export interface ITracing extends IApiItem {
+interface ITracing extends IApiItem {
     filename: string;
     annotator: string;
     lengthMicrometers: number;
@@ -10,11 +6,11 @@ export interface ITracing extends IApiItem {
     structureIdentifierId: string;
 }
 
-export interface ITracingResource extends ng.resource.IResourceClass<ng.resource.IResource<ITracing>> {
+interface ITracingResource extends ng.resource.IResourceClass<ng.resource.IResource<ITracing>> {
     nodes(obj: any): ITracing;
 }
 
-export class TracingService extends DataService<ITracing> {
+class TracingService extends DataService<ITracing> {
     public static $inject = [
         "$resource",
         "$http"

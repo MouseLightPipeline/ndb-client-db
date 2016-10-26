@@ -1,13 +1,9 @@
-import ng = require("angular");
-
-import {IApiNamedItem, NamedItemDataService} from "./dataService";
-
-export interface IRegistrationTransform extends IApiNamedItem {
+interface IRegistrationTransform extends IApiNamedItem {
     location: string;
     notes: string;
 }
 
-export class RegistrationTransformService extends NamedItemDataService<IRegistrationTransform> {
+class RegistrationTransformService extends NamedItemDataService<IRegistrationTransform> {
     public static $inject = [
         "$resource"
     ];

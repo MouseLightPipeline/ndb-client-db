@@ -1,8 +1,4 @@
-import ng = require("angular");
-
-import {IApiNamedItem, NamedItemDataService} from "./dataService";
-
-export interface IBrainArea extends IApiNamedItem {
+interface IBrainArea extends IApiNamedItem {
     structureId: number;
     depth: number;
     parentStructureId: number;
@@ -11,18 +7,18 @@ export interface IBrainArea extends IApiNamedItem {
     acronym: string;
 }
 
-export interface IBrainAreaResource extends ng.resource.IResourceClass<ng.resource.IResource<IBrainArea>> {
+interface IBrainAreaResource extends ng.resource.IResourceClass<ng.resource.IResource<IBrainArea>> {
     queryForDepth(obj: any): any;
     queryForParent(obj: any): any;
 }
 
-export class BrainAreaDepthEntry {
+class BrainAreaDepthEntry {
     depth: number;
     areas: Array<IBrainArea>;
     selectedAreaIndex: number;
 }
 
-export class BrainAreaService extends NamedItemDataService<IBrainArea> {
+class BrainAreaService extends NamedItemDataService<IBrainArea> {
     public static $inject = [
         "$resource"
     ];

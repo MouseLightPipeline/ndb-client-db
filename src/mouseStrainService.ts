@@ -1,11 +1,7 @@
-import ng = require("angular");
-
-import {IApiNamedItem, NamedItemDataService} from "./dataService";
-
-export interface IMouseStrain extends IApiNamedItem {
+interface IMouseStrain extends IApiNamedItem {
 }
 
-export class MouseStrainService extends NamedItemDataService<IMouseStrain> {
+class MouseStrainService extends NamedItemDataService<IMouseStrain> {
     public static $inject = [
         "$resource"
     ];

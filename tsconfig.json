@@ -1,17 +1,33 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "module": "amd",
     "sourceMap": true,
     "declaration": true,
-    "declarationDir": "@types",
+    "declarationDir": "dist/@types",
     "removeComments": true,
     "noEmitHelpers": false,
     "noImplicitAny": true,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "outDir": "dist"
   },
+  "files": [
+    "typings/index.d.ts",
+    "src/entityStore.ts",
+    "src/dataService.ts",
+    "src/brainAreaService.ts",
+    "src/fluorophoreService.ts",
+    "src/injectionVirusService.ts",
+    "src/registrationTransformService.ts",
+    "src/mouseStrainService.ts",
+    "src/structureIdentifierService.ts",
+    "src/injectionService.ts",
+    "src/neuronService.ts",
+    "src/sampleService.ts",
+    "src/tracingNodeService.ts",
+    "src/tracingService.ts"
+  ],
   "exclude": [
     "node_modules",
     "dist"

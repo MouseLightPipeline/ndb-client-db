@@ -1,26 +1,22 @@
-import ng = require("angular");
-
-import {IEntityStore, EntityStore, WhereFunction} from "./entityStore";
-
-export interface IApiItem {
+interface IApiItem {
     id: string;
     createdAt: Date;
     updatedAt: Date;
 }
 
-export interface IApiIdNumberItem extends IApiItem {
+interface IApiIdNumberItem extends IApiItem {
     idNumber: number;
 }
 
-export interface IApiNamedItem extends IApiItem {
+interface IApiNamedItem extends IApiItem {
     name: string;
 }
 
-export interface IMyResourceClass<T extends IApiItem> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
+interface IMyResourceClass<T extends IApiItem> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
     update(obj: any, data: T): void;
 }
 
-export abstract class DataService<T extends IApiItem> {
+abstract class DataService<T extends IApiItem> {
     public static $inject = [
         "$resource"
     ];
@@ -157,7 +153,7 @@ export abstract class DataService<T extends IApiItem> {
     }
 }
 
-export abstract class NumberedItemDataService<T extends IApiIdNumberItem> extends DataService<T> {
+abstract class NumberedItemDataService<T extends IApiIdNumberItem> extends DataService<T> {
 
     public findWithIdNumber(id: number): T {
         let item: any = this.where((obj: IApiIdNumberItem) => {
@@ -168,7 +164,7 @@ export abstract class NumberedItemDataService<T extends IApiIdNumberItem> extend
     }
 }
 
-export abstract class NamedItemDataService<T extends IApiNamedItem> extends DataService<T> {
+abstract class NamedItemDataService<T extends IApiNamedItem> extends DataService<T> {
 
     public findWithName(name: string): T {
         let item: any = this.where((obj: IApiNamedItem) => {

@@ -1,8 +1,8 @@
-export interface WhereFunction<T> {
+interface WhereFunction<T> {
     (obj: T): boolean;
 }
 
-export interface IEntityStore<T> {
+interface IEntityStore<T> {
     clear(): void;
     findItem(key: string): T;
     addItem(item: T): void;
@@ -13,7 +13,7 @@ export interface IEntityStore<T> {
     items: Array<T>;
 }
 
-export class EntityStore<T> implements IEntityStore<T> {
+class EntityStore<T> implements IEntityStore<T> {
     private _store: any = {};
     private _array: Array<T> = [];
     private _idKey: string;
