@@ -1,15 +1,25 @@
-interface IInjection extends IApiItem {
+import {IApiItem, DataService} from "./dataService";
+import ng = require("angular");
+
+import {BrainAreaService} from "./brainAreaService";
+import {InjectionVirusService} from "./injectionVirusService";
+
+export interface IInjection extends IApiItem {
     sampleId: string;
     brainAreaId: string;
     injectionVirusId: string;
     fluorophoreId: string;
 }
 
-interface IInjectionResource extends ng.resource.IResourceClass<ng.resource.IResource<IInjection>> {
-    injectionsForSample(obj): Array<string>;
+export interface IInjectionResource extends ng.resource.IResourceClass<ng.resource.IResource<IInjection>> {
+    injectionsForSample(obj: any): Array<string>;
 }
 
-class InjectionService extends DataService<IInjection> {
+interface IInjectionSampleMap {
+    [key: string]: Array<IInjection>;
+}
+
+export class InjectionService extends DataService<IInjection> {
 
     public static $inject = [
         "$resource",
@@ -17,7 +27,7 @@ class InjectionService extends DataService<IInjection> {
         "brainAreaService"
     ];
 
-    private injectionSampleMap = {};
+    private injectionSampleMap: IInjectionSampleMap = {};
 
     constructor($resource: ng.resource.IResourceService, private injectionVirusService: InjectionVirusService, private brainAreaService: BrainAreaService) {
         super($resource);
@@ -41,15 +51,19 @@ class InjectionService extends DataService<IInjection> {
     protected registerNewItem(obj: IInjection): IInjection {
         let item: IInjection = super.registerNewItem(obj) as IInjection;
 
-        let list = this.injectionSampleMap[item.sampleId];
+        let list: Array<IInjection> = this.injectionSampleMap[item.sampleId];
 
         if (list === undefined || list === null) {
             list = [];
             this.injectionSampleMap[item.sampleId] = list;
         }
 
-        let index: number = list.indexOf(item.sampleId);
+        // Find index of item in list, if present.
+        let matching: Array<number> = list.map((obj, index) => obj.id === item.sampleId ? index : -1).filter(index => index > -1);
 
+        let index: number =  matching.length > 0 ? matching[0] : -1; // list.indexOf(item.sampleId);
+
+        // Add or update.
         if (index < 0) {
             list.push(item);
         } else {

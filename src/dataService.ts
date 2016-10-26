@@ -1,24 +1,26 @@
 import ng = require("angular");
 
-interface IApiItem {
+import {IEntityStore, EntityStore, WhereFunction} from "./entityStore";
+
+export interface IApiItem {
     id: string;
     createdAt: Date;
     updatedAt: Date;
 }
 
-interface IApiIdNumberItem extends IApiItem {
+export interface IApiIdNumberItem extends IApiItem {
     idNumber: number;
 }
 
-interface IApiNamedItem extends IApiItem {
+export interface IApiNamedItem extends IApiItem {
     name: string;
 }
 
-interface IMyResourceClass<T extends IApiItem> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
-    update(obj: any, data: T);
+export interface IMyResourceClass<T extends IApiItem> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
+    update(obj: any, data: T): void;
 }
 
-abstract class DataService<T extends IApiItem> {
+export abstract class DataService<T extends IApiItem> {
     public static $inject = [
         "$resource"
     ];
@@ -50,7 +52,7 @@ abstract class DataService<T extends IApiItem> {
         this._entityStore.clear();
 
         return new Promise<void>((resolve) => {
-            this.dataSource.query((data) => {
+            this.dataSource.query((data: any) => {
 
                 this.registerNewItems(data);
 
@@ -69,10 +71,10 @@ abstract class DataService<T extends IApiItem> {
         resourceClass.update({}, data);
     }
 
-    public createItem(data): Promise<T> {
+    public createItem(data: any): Promise<T> {
         return new Promise<T>((resolve, reject) => {
             this.dataSource.save(data).$promise.then((obj: T) => {
-                this.dataSource.get({id: obj.id}, (item) => {
+                this.dataSource.get({id: obj.id}, (item: any) => {
                     item = this.registerNewItem(item);
                     resolve(item);
                 });
@@ -88,7 +90,7 @@ abstract class DataService<T extends IApiItem> {
 
     public getDisplayName(item: T, defaultValue: string = ""): string {
         if ("name" in item)
-            return item["name"];
+            return (<any>item)["name"];
 
         return defaultValue;
     }
@@ -121,28 +123,12 @@ abstract class DataService<T extends IApiItem> {
     protected registerNewItem(obj: any): T {
         let item: T = this.mapQueriedItem(obj);
 
-        /*
-         this[item.id] = item;
-
-         let index: number = this.items.findIndex((obj: IApiItem) => {
-         return obj.id === item.id;
-         });
-
-         if (index > -1) {
-         this.items[index] = item;
-         } else {
-         this.items.push(item);
-         }
-         */
-
-
         this._entityStore.addItem(item);
 
         return item;
-
     }
 
-    protected registerNewItems(items) {
+    protected registerNewItems(items: any) {
         items = items.map((obj: IApiItem) => {
             return this.registerNewItem(obj);
         });
@@ -171,7 +157,7 @@ abstract class DataService<T extends IApiItem> {
     }
 }
 
-abstract class NumberedItemDataService<T extends IApiIdNumberItem> extends DataService<T> {
+export abstract class NumberedItemDataService<T extends IApiIdNumberItem> extends DataService<T> {
 
     public findWithIdNumber(id: number): T {
         let item: any = this.where((obj: IApiIdNumberItem) => {
@@ -182,7 +168,7 @@ abstract class NumberedItemDataService<T extends IApiIdNumberItem> extends DataS
     }
 }
 
-abstract class NamedItemDataService<T extends IApiNamedItem> extends DataService<T> {
+export abstract class NamedItemDataService<T extends IApiNamedItem> extends DataService<T> {
 
     public findWithName(name: string): T {
         let item: any = this.where((obj: IApiNamedItem) => {

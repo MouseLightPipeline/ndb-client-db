@@ -1,4 +1,8 @@
-interface ISample extends IApiIdNumberItem {
+import ng = require("angular");
+
+import {IApiIdNumberItem, NumberedItemDataService} from "./dataService";
+
+export interface ISample extends IApiIdNumberItem {
     sampleDate: Date;
     tag: string;
     comment: string;
@@ -7,7 +11,7 @@ interface ISample extends IApiIdNumberItem {
     injections: Array<string>;
 }
 
-class SampleService extends NumberedItemDataService<ISample> {
+export class SampleService extends NumberedItemDataService<ISample> {
     public static $inject = [
         "$resource"
     ];
@@ -47,7 +51,7 @@ class SampleService extends NumberedItemDataService<ISample> {
     }
 }
 
-function lpad(n, width, z = "0"): string {
-    n = n + "";
-    return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+function lpad(n: number, width: number, z = "0"): string {
+    let str: string = n + "";
+    return str.length >= width ? str : new Array(width - str.length + 1).join(z) + str;
 }

@@ -1,4 +1,8 @@
-interface IBrainArea extends IApiNamedItem {
+import ng = require("angular");
+
+import {IApiNamedItem, NamedItemDataService} from "./dataService";
+
+export interface IBrainArea extends IApiNamedItem {
     structureId: number;
     depth: number;
     parentStructureId: number;
@@ -7,18 +11,18 @@ interface IBrainArea extends IApiNamedItem {
     acronym: string;
 }
 
-interface IBrainAreaResource extends ng.resource.IResourceClass<ng.resource.IResource<IBrainArea>> {
-    queryForDepth(obj): any;
-    queryForParent(obj): any;
+export interface IBrainAreaResource extends ng.resource.IResourceClass<ng.resource.IResource<IBrainArea>> {
+    queryForDepth(obj: any): any;
+    queryForParent(obj: any): any;
 }
 
-class BrainAreaDepthEntry {
+export class BrainAreaDepthEntry {
     depth: number;
     areas: Array<IBrainArea>;
     selectedAreaIndex: number;
 }
 
-class BrainAreaService extends NamedItemDataService<IBrainArea> {
+export class BrainAreaService extends NamedItemDataService<IBrainArea> {
     public static $inject = [
         "$resource"
     ];
@@ -59,30 +63,12 @@ class BrainAreaService extends NamedItemDataService<IBrainArea> {
         };
     }
 
-    /*
-     protected createResource(location: string): IBrainAreaResource {
-     return <IBrainAreaResource>this.$resource(location + "brainareas/:id", {id: "@id"}, {
-     queryForDepth: {
-     method: "GET",
-     url: location + "brainareas/depth/:depth",
-     params: {depth: "@depth"},
-     isArray: true
-     },
-     queryForParent: {
-     method: "GET",
-     url: location + "brainareas/parent/:parentId",
-     params: {parentId: "@parentId"},
-     isArray: true
-     }
-     });
-     }
-     */
     public brainAreasForDepth(depth: number): Promise<any> {
         return new Promise<any>((resolve, reject) => {
-            this.service.queryForDepth({depth: depth}).$promise.then((data) => {
+            this.service.queryForDepth({depth: depth}).$promise.then((data: any) => {
                 data = this.registerNewItems(data);
                 resolve(data);
-            }).catch((err) => {
+            }).catch((err: any) => {
                 reject(err);
             });
         });
@@ -90,10 +76,10 @@ class BrainAreaService extends NamedItemDataService<IBrainArea> {
 
     public brainAreasForParent(parentId: number): Promise<any> {
         return new Promise<any>((resolve, reject) => {
-            this.service.queryForParent({parentId: parentId}).$promise.then((data) => {
+            this.service.queryForParent({parentId: parentId}).$promise.then((data: any) => {
                 data = this.registerNewItems(data);
                 resolve(data);
-            }).catch((err) => {
+            }).catch((err: any) => {
                 reject(err);
             });
         });

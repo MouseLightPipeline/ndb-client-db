@@ -1,7 +1,11 @@
-interface IFluorophore extends IApiNamedItem {
+import ng = require("angular");
+
+import {IApiNamedItem, NamedItemDataService} from "./dataService";
+
+export interface IFluorophore extends IApiNamedItem {
 }
 
-class FluorophoreService extends NamedItemDataService<IFluorophore> {
+export class FluorophoreService extends NamedItemDataService<IFluorophore> {
 
     public static $inject = [
         "$resource"

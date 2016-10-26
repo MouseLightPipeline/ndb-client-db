@@ -1,20 +1,19 @@
-
-interface WhereFunction<T> {
+export interface WhereFunction<T> {
     (obj: T): boolean;
 }
 
-interface IEntityStore<T> {
-    clear();
+export interface IEntityStore<T> {
+    clear(): void;
     findItem(key: string): T;
-    addItem(item: T);
-    addItems(items: Array<T>);
-    removeItem(item: T);
+    addItem(item: T): void;
+    addItems(items: Array<T>): void;
+    removeItem(item: T): void;
     removeItems(items: Array<T>): Array<T>;
     where(fcn: WhereFunction<T>): Array<T>;
     items: Array<T>;
 }
 
-class EntityStore<T> implements IEntityStore<T> {
+export class EntityStore<T> implements IEntityStore<T> {
     private _store: any = {};
     private _array: Array<T> = [];
     private _idKey: string;
@@ -23,7 +22,7 @@ class EntityStore<T> implements IEntityStore<T> {
         this._idKey = idKey;
     }
 
-    public clear() {
+    public clear(): void {
         this._array.length = 0;
 
         Object.keys(this._store).forEach((key) => {
@@ -39,13 +38,13 @@ class EntityStore<T> implements IEntityStore<T> {
         return this._store[key];
     }
 
-    public addItem(item: T) {
+    public addItem(item: T): void {
         if (this.findObject(item) == null) {
             this.insertItem(item);
         }
     }
 
-    public addItems(items: Array<T>) {
+    public addItems(items: Array<T>): void {
         items.forEach((item) => {
             this.addItem(item);
         });
@@ -88,21 +87,21 @@ class EntityStore<T> implements IEntityStore<T> {
             return null;
         }
 
-        return item[this._idKey];
+        return (<any>item)[this._idKey];
     }
 
-    private insertItem(item: T) {
+    private insertItem(item: T): void {
         this._array.push(item);
 
-        this._store[item[this._idKey]] = item;
+        this._store[(<any>item)[this._idKey]] = item;
     }
 
-    private deleteItem(item: T) {
+    private deleteItem(item: T): void {
         if (item == null) {
             return;
         }
 
-        let key = item[this._idKey];
+        let key = (<any>item)[this._idKey];
 
         if (key == null) {
             return;

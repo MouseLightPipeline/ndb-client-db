@@ -5,18 +5,15 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "declaration": true,
+    "declarationDir": "@types",
     "removeComments": true,
     "noEmitHelpers": false,
+    "noImplicitAny": true,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "outDir": "dist"
+    "experimentalDecorators": true
   },
-  "include": [
-    "client/**/*.ts"
-  ],
   "exclude": [
     "node_modules",
-    "bower_components",
     "dist"
   ]
 }

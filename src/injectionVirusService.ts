@@ -1,7 +1,11 @@
-interface IInjectionVirus extends IApiNamedItem {
+import ng = require("angular");
+
+import {IApiNamedItem, NamedItemDataService} from "./dataService";
+
+export interface IInjectionVirus extends IApiNamedItem {
 }
 
-class InjectionVirusService extends NamedItemDataService<IInjectionVirus> {
+export class InjectionVirusService extends NamedItemDataService<IInjectionVirus> {
     public static $inject = [
         "$resource"
     ];

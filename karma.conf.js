@@ -17,11 +17,8 @@ module.exports = function (config) {
         files: [
             'node_modules/angular/angular.js',
             'node_modules/angular-resource/angular-resource.js',
-            'node_modules/es6-promise/dist/es6-promise.js',
             'node_modules/angular-mocks/angular-mocks.js',
-            'node_modules/rxjs/bundles/Rx.js',
-            './dist/services/dataService.js',
-            './dist/services/brainAreaService.js',
+            './dist/ndb-client.js',
             './test/**/testApp.js',
             './test/**/*.spec.js'
         ],

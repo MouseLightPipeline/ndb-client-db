@@ -1,4 +1,8 @@
-interface ITracing extends IApiItem {
+import ng = require("angular");
+
+import {IApiItem, DataService} from "./dataService";
+
+export interface ITracing extends IApiItem {
     filename: string;
     annotator: string;
     lengthMicrometers: number;
@@ -6,11 +10,11 @@ interface ITracing extends IApiItem {
     structureIdentifierId: string;
 }
 
-interface ITracingResource extends ng.resource.IResourceClass<ng.resource.IResource<ITracing>> {
-    nodes(obj): ITracing;
+export interface ITracingResource extends ng.resource.IResourceClass<ng.resource.IResource<ITracing>> {
+    nodes(obj: any): ITracing;
 }
 
-class TracingService extends DataService<ITracing> {
+export class TracingService extends DataService<ITracing> {
     public static $inject = [
         "$resource",
         "$http"
@@ -56,7 +60,7 @@ class TracingService extends DataService<ITracing> {
                 transformRequest: ng.identity,
                 headers: {"Content-Type": undefined}
             }).then((result) => {
-                this.dataSource.get({id: result.data.id}, (fullItem) => {
+                this.dataSource.get({id: result.data.id}, (fullItem: any) => {
                     this._entityStore.addItem(fullItem);
                     resolve(fullItem);
                 });
