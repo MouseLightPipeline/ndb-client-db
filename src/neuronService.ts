@@ -8,7 +8,7 @@ interface INeuron extends IApiIdNumberItem {
     z: number;
 }
 
-interface INeuronSampleMap {
+interface INeuronInjectionMap {
     [key: string]: Array<INeuron>;
 }
 
@@ -18,7 +18,7 @@ class NeuronService extends NumberedItemDataService<INeuron> {
     ];
 
     // Arrays of neuron objects keyed by injection id.
-    private neuronInjectionMap: INeuronSampleMap = {};
+    private neuronInjectionMap: INeuronInjectionMap = {};
 
     constructor($resource: ng.resource.IResourceService) {
         super($resource);

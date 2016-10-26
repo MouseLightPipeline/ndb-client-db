@@ -3,7 +3,6 @@ interface ISample extends IApiIdNumberItem {
     tag: string;
     comment: string;
     mouseStrainId: string;
-    registrationTransformId: string;
     injections: Array<string>;
 }
 

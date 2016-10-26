@@ -125,11 +125,18 @@ declare class InjectionVirusService extends NamedItemDataService<IInjectionVirus
 interface IRegistrationTransform extends IApiNamedItem {
     location: string;
     notes: string;
+    sampleId: string;
+}
+interface IRegistrationTransformSampleMap {
+    [key: string]: Array<IRegistrationTransform>;
 }
 declare class RegistrationTransformService extends NamedItemDataService<IRegistrationTransform> {
     static $inject: string[];
+    private registrationTransformSampleMap;
     constructor($resource: ng.resource.IResourceService);
+    protected registerNewItem(rawObj: any): IRegistrationTransform;
     protected resourcePath(): string;
+    registrationTransformsForSample(sampleId: string): Array<IRegistrationTransform>;
     readonly transforms: Array<IRegistrationTransform>;
 }
 
@@ -158,9 +165,6 @@ interface IInjection extends IApiItem {
     injectionVirusId: string;
     fluorophoreId: string;
 }
-interface IInjectionResource extends ng.resource.IResourceClass<ng.resource.IResource<IInjection>> {
-    injectionsForSample(obj: any): Array<string>;
-}
 interface IInjectionSampleMap {
     [key: string]: Array<IInjection>;
 }
@@ -171,7 +175,6 @@ declare class InjectionService extends DataService<IInjection> {
     private injectionSampleMap;
     constructor($resource: ng.resource.IResourceService, injectionVirusService: InjectionVirusService, brainAreaService: BrainAreaService);
     protected resourcePath(): string;
-    protected createCustomResourceMethods(): any;
     protected registerNewItem(obj: IInjection): IInjection;
     injectionsForSample(sampleId: string): Array<IInjection>;
     readonly injections: Array<IInjection>;
@@ -187,7 +190,7 @@ interface INeuron extends IApiIdNumberItem {
     y: number;
     z: number;
 }
-interface INeuronSampleMap {
+interface INeuronInjectionMap {
     [key: string]: Array<INeuron>;
 }
 declare class NeuronService extends NumberedItemDataService<INeuron> {
@@ -206,7 +209,6 @@ interface ISample extends IApiIdNumberItem {
     tag: string;
     comment: string;
     mouseStrainId: string;
-    registrationTransformId: string;
     injections: Array<string>;
 }
 declare class SampleService extends NumberedItemDataService<ISample> {

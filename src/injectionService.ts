@@ -5,10 +5,6 @@ interface IInjection extends IApiItem {
     fluorophoreId: string;
 }
 
-interface IInjectionResource extends ng.resource.IResourceClass<ng.resource.IResource<IInjection>> {
-    injectionsForSample(obj: any): Array<string>;
-}
-
 interface IInjectionSampleMap {
     [key: string]: Array<IInjection>;
 }
@@ -29,17 +25,6 @@ class InjectionService extends DataService<IInjection> {
 
     protected resourcePath(): string {
         return "injections";
-    }
-
-    protected createCustomResourceMethods(): any {
-        return {
-            injectionsForSample: {
-                method: "GET",
-                url: this.apiUrl + "injections/sample/:id/",
-                params: {id: "@id"},
-                isArray: true
-            }
-        };
     }
 
     protected registerNewItem(obj: IInjection): IInjection {
@@ -77,7 +62,6 @@ class InjectionService extends DataService<IInjection> {
 
         return injections;
     }
-
 
     public get injections(): Array<IInjection> {
         return this._entityStore.items;
