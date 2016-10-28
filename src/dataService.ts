@@ -150,7 +150,7 @@ abstract class DataService<T extends IApiItem> {
     private createResource(location: string) {
         let obj: any = this.createCustomResourceMethods();
 
-        obj.update = {method: "PUT", url: location + "brainareas"};
+        //obj.update = {method: "PUT", url: location + "brainareas"};
 
         this.dataSource = this.$resource(location + this.resourcePath() + "/:id", {id: "@id"}, obj);
     }
