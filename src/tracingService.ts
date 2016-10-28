@@ -53,7 +53,7 @@ class TracingService extends DataService<ITracing> {
 
             this.$http.post<ITracing>(url, fd, {
                 params: tracingInfo,
-                transformRequest: ng.identity,
+                transformRequest: angular.identity,
                 headers: {"Content-Type": undefined}
             }).then((result) => {
                 this.dataSource.get({id: result.data.id}, (fullItem: any) => {

@@ -14,11 +14,11 @@ gulp.task('default', ['watch']);
 gulp.task('build', ['clean', 'tslint', 'ts']);
 
 gulp.task('watch', ['clean', 'build'], () => {
-    return gulp.watch(['client/**/*.ts', 'gulpfile.js'], ['build']);
+    return gulp.watch(['src/**/*.ts', 'gulpfile.js'], ['build']);
 });
 
 gulp.task('clean', () => {
-    return del(['dist/**/*', 'client/**/*.js', 'client/**/*.js.map', 'client/**/*.d.ts']);
+    return del(['dist/**/*', 'src/**/*.js', 'src/**/*.js.map', 'src/**/*.d.ts']);
 });
 
 gulp.task("tslint", () => {
