@@ -85,8 +85,11 @@ abstract class DataService<T extends IApiItem> {
     }
 
     public getDisplayName(item: T, defaultValue: string = ""): string {
-        if ("name" in item)
-            return (<any>item)["name"];
+        if ("name" in item) {
+            if ((<any>item)["name"].length > 0) {
+                return (<any>item)["name"];
+            }
+        }
 
         return defaultValue;
     }
