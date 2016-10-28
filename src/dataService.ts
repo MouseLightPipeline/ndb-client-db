@@ -1,15 +1,15 @@
 interface IApiItem {
-    id: string;
-    createdAt: Date;
-    updatedAt: Date;
+    id?: string;
+    createdAt?: Date;
+    updatedAt?: Date;
 }
 
 interface IApiIdNumberItem extends IApiItem {
-    idNumber: number;
+    idNumber?: number;
 }
 
 interface IApiNamedItem extends IApiItem {
-    name: string;
+    name?: string;
 }
 
 interface IMyResourceClass<T extends IApiItem> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
