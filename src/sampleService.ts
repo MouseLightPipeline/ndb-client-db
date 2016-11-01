@@ -4,7 +4,7 @@ interface ISample extends IApiIdNumberItem {
     comment: string;
     mouseStrainId: string;
     activeRegistrationTransformId: string;
-    injections: Array<string>;
+    injections: string[];
 }
 
 class SampleService extends NumberedItemDataService<ISample> {
@@ -28,7 +28,7 @@ class SampleService extends NumberedItemDataService<ISample> {
         return "samples";
     }
 
-    public get samples(): Array<ISample> {
+    public get samples(): ISample[] {
         return this._entityStore.items;
     }
 

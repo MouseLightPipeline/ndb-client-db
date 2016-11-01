@@ -59,22 +59,22 @@ class BrainAreaService extends NamedItemDataService<IBrainArea> {
         };
     }
 
-    public brainAreasForDepth(depth: number): Promise<any> {
-        return new Promise<any>((resolve, reject) => {
+    public brainAreasForDepth(depth: number): Promise<IBrainArea[]> {
+        return new Promise<IBrainArea[]>((resolve, reject) => {
             this.service.queryForDepth({depth: depth}).$promise.then((data: any) => {
-                data = this.registerNewItems(data);
-                resolve(data);
+                let resolvedData: IBrainArea[] = this.registerNewItems(data);
+                resolve(resolvedData);
             }).catch((err: any) => {
                 reject(err);
             });
         });
     }
 
-    public brainAreasForParent(parentId: number): Promise<any> {
-        return new Promise<any>((resolve, reject) => {
-            this.service.queryForParent({parentId: parentId}).$promise.then((data: any) => {
-                data = this.registerNewItems(data);
-                resolve(data);
+    public brainAreasForParent(parentId: number): Promise<IBrainArea[]> {
+        return new Promise<IBrainArea[]>((resolve, reject) => {
+            this.service.queryForParent({parentId: parentId}).$promise.then((data: IBrainArea[]) => {
+                let resolvedData: IBrainArea[] = this.registerNewItems(data);
+                resolve(resolvedData);
             }).catch((err: any) => {
                 reject(err);
             });

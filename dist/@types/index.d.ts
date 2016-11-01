@@ -100,8 +100,8 @@ declare class BrainAreaService extends NamedItemDataService<IBrainArea> {
     protected mapQueriedItem(obj: any): IBrainArea;
     protected resourcePath(): string;
     protected createCustomResourceMethods(): any;
-    brainAreasForDepth(depth: number): Promise<any>;
-    brainAreasForParent(parentId: number): Promise<any>;
+    brainAreasForDepth(depth: number): Promise<IBrainArea[]>;
+    brainAreasForParent(parentId: number): Promise<IBrainArea[]>;
 }
 
 interface IFluorophore extends IApiNamedItem {
@@ -137,7 +137,7 @@ declare class RegistrationTransformService extends NamedItemDataService<IRegistr
     protected registerNewItem(rawObj: any): IRegistrationTransform;
     protected resourcePath(): string;
     registrationTransformsForSample(sampleId: string): Array<IRegistrationTransform>;
-    readonly transforms: Array<IRegistrationTransform>;
+    readonly transforms: IRegistrationTransform[];
 }
 
 interface IMouseStrain extends IApiNamedItem {
@@ -176,8 +176,8 @@ declare class InjectionService extends DataService<IInjection> {
     constructor($resource: ng.resource.IResourceService, injectionVirusService: InjectionVirusService, brainAreaService: BrainAreaService);
     protected resourcePath(): string;
     protected registerNewItem(obj: IInjection): IInjection;
-    injectionsForSample(sampleId: string): Array<IInjection>;
-    readonly injections: Array<IInjection>;
+    injectionsForSample(sampleId: string): IInjection[];
+    readonly injections: IInjection[];
     getDisplayName(item: IInjection, defaultValue?: string): string;
 }
 
@@ -210,14 +210,14 @@ interface ISample extends IApiIdNumberItem {
     comment: string;
     mouseStrainId: string;
     activeRegistrationTransformId: string;
-    injections: Array<string>;
+    injections: string[];
 }
 declare class SampleService extends NumberedItemDataService<ISample> {
     static $inject: string[];
     constructor($resource: ng.resource.IResourceService);
     protected mapQueriedItem(obj: any): ISample;
     protected resourcePath(): string;
-    readonly samples: Array<ISample>;
+    readonly samples: ISample[];
     getDisplayName(item: ISample, defaultValue?: string): string;
 }
 declare function lpad(n: number, width: number, z?: string): string;

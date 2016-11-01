@@ -31,7 +31,7 @@ class RegistrationTransformService extends NamedItemDataService<IRegistrationTra
         }
 
         // Find index of item in list, if present.
-        let matching: Array<number> = list.map((obj, index) => obj.id === item.sampleId ? index : -1).filter(index => index > -1);
+        let matching: number[] = list.map((obj, index) => obj.id === item.sampleId ? index : -1).filter(index => index > -1);
 
         let index: number =  matching.length > 0 ? matching[0] : -1;
 
@@ -60,7 +60,7 @@ class RegistrationTransformService extends NamedItemDataService<IRegistrationTra
         return transforms;
     }
 
-    public get transforms(): Array<IRegistrationTransform> {
+    public get transforms(): IRegistrationTransform[] {
         return this._entityStore.items;
     }
 }

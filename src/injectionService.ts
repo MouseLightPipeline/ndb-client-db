@@ -52,7 +52,7 @@ class InjectionService extends DataService<IInjection> {
         return item;
     }
 
-    public injectionsForSample(sampleId: string): Array<IInjection> {
+    public injectionsForSample(sampleId: string): IInjection[] {
         let injections = this.injectionSampleMap[sampleId];
 
         if (injections === undefined || injections === null) {
@@ -63,7 +63,7 @@ class InjectionService extends DataService<IInjection> {
         return injections;
     }
 
-    public get injections(): Array<IInjection> {
+    public get injections(): IInjection[] {
         return this._entityStore.items;
     }
 
