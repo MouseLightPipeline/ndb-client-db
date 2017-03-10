@@ -27,6 +27,10 @@ class BrainAreaService extends NamedItemDataService<IBrainArea> {
         super($resource);
     }
 
+    public get brainAreas(): IBrainArea[] {
+        return this._entityStore.items;
+    }
+
     private get service(): IBrainAreaResource {
         return <IBrainAreaResource>this.dataSource;
     }

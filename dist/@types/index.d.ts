@@ -96,6 +96,7 @@ declare class BrainAreaDepthEntry {
 declare class BrainAreaService extends NamedItemDataService<IBrainArea> {
     static $inject: string[];
     constructor($resource: ng.resource.IResourceService);
+    readonly brainAreas: IBrainArea[];
     private readonly service;
     protected mapQueriedItem(obj: any): IBrainArea;
     protected resourcePath(): string;
