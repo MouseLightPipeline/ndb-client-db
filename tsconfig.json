@@ -26,7 +26,8 @@
     "src/neuronService.ts",
     "src/sampleService.ts",
     "src/tracingNodeService.ts",
-    "src/tracingService.ts"
+    "src/tracingService.ts",
+    "src/tracingStructureService.ts"
   ],
   "exclude": [
     "node_modules",

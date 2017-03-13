@@ -258,3 +258,13 @@ declare class TracingService extends DataService<ITracing> {
     readonly tracings: Array<ITracing>;
     uploadSwcFile(theFile: any, tracingInfo: any): Promise<any>;
 }
+
+interface ITracingStructure extends IApiNamedItem {
+    value: number;
+}
+declare class TracingStructureService extends NamedItemDataService<ITracingStructure> {
+    static $inject: string[];
+    constructor($resource: ng.resource.IResourceService);
+    protected resourcePath(): string;
+    readonly structures: Array<ITracingStructure>;
+}

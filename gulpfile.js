@@ -1,13 +1,13 @@
-var gulp = require('gulp');
-var del = require('del');
-var rename = require('gulp-rename');
-var plumber = require('gulp-plumber');
-var tslint = require("gulp-tslint");
-var concat = require('gulp-concat');
-var ts = require("gulp-typescript");
-var typings = require("gulp-typings");
-var sourcemaps = require('gulp-sourcemaps');
-var merge = require('merge2');
+const gulp = require('gulp');
+const del = require('del');
+const rename = require('gulp-rename');
+const plumber = require('gulp-plumber');
+const tslint = require("gulp-tslint");
+const concat = require('gulp-concat');
+const ts = require("gulp-typescript");
+const typings = require("gulp-typings");
+const sourcemaps = require('gulp-sourcemaps');
+const merge = require('merge2');
 
 gulp.task('default', ['watch']);
 
@@ -22,7 +22,7 @@ gulp.task('clean', () => {
 });
 
 gulp.task("tslint", () => {
-    var tslintConfig = require('./tslint.json');
+    const tslintConfig = require('./tslint.json');
 
     return gulp.src('client/**/*.ts').pipe(tslint({configuration: tslintConfig}))
         .pipe(tslint.report("verbose", {emitError: false}))
@@ -33,9 +33,9 @@ gulp.task("typings", ['clean'], () => {
 });
 
 gulp.task('ts', ['typings'], () => {
-    var tsProject = ts.createProject('./tsconfig.json');
+    const tsProject = ts.createProject('./tsconfig.json');
 
-    var tsResult = tsProject.src().pipe(sourcemaps.init()).pipe(tsProject());
+    const tsResult = tsProject.src().pipe(sourcemaps.init()).pipe(tsProject());
 
     return merge([tsResult.js.pipe(sourcemaps.write()).pipe(gulp.dest('dist')), tsResult.dts.pipe(concat('index.d.ts')).pipe(gulp.dest('dist/@types'))]);
 });
