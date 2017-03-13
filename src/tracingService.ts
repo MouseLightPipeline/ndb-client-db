@@ -3,7 +3,7 @@ interface ITracing extends IApiItem {
     annotator: string;
     lengthMicrometers: number;
     neuronId: string;
-    structureIdentifierId: string;
+    tracingStructureId: string;
 }
 
 interface ITracingResource extends ng.resource.IResourceClass<ng.resource.IResource<ITracing>> {
