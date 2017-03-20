@@ -207,6 +207,7 @@ declare class NeuronService extends NumberedItemDataService<INeuron> {
 
 interface ISample extends IApiIdNumberItem {
     sampleDate: Date;
+    animalId: string;
     tag: string;
     comment: string;
     mouseStrainId: string;
@@ -243,7 +244,7 @@ interface ITracing extends IApiItem {
     annotator: string;
     lengthMicrometers: number;
     neuronId: string;
-    structureIdentifierId: string;
+    tracingStructureId: string;
 }
 interface ITracingResource extends ng.resource.IResourceClass<ng.resource.IResource<ITracing>> {
     nodes(obj: any): ITracing;

@@ -1,5 +1,6 @@
 interface ISample extends IApiIdNumberItem {
     sampleDate: Date;
+    animalId: string;
     tag: string;
     comment: string;
     mouseStrainId: string;
