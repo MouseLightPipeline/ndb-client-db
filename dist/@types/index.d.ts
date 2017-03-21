@@ -194,15 +194,21 @@ interface INeuron extends IApiIdNumberItem {
 interface INeuronInjectionMap {
     [key: string]: Array<INeuron>;
 }
+interface INeuronResource extends ng.resource.IResourceClass<ng.resource.IResource<INeuron>> {
+    neuronsForSample(obj: any): Array<ISample>;
+}
 declare class NeuronService extends NumberedItemDataService<INeuron> {
     static $inject: string[];
     private neuronInjectionMap;
     constructor($resource: ng.resource.IResourceService);
+    private readonly service;
     protected registerNewItem(rawObj: INeuron): INeuron;
+    protected createCustomResourceMethods(): any;
     protected resourcePath(): string;
     neuronsForInjection(injectionId: string): Array<INeuron>;
     readonly neurons: Array<INeuron>;
     getDisplayName(item: INeuron, defaultValue?: string): string;
+    neuronsForSample(sampleId: string): Promise<Array<ITracingNode>>;
 }
 
 interface ISample extends IApiIdNumberItem {

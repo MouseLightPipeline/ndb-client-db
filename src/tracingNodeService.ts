@@ -18,7 +18,6 @@ class TracingNodeService extends DataService<ITracingNode> {
         return <ITracingNodeResource>this.dataSource;
     }
 
-
     protected resourcePath(): string {
         return "nodes";
     }
@@ -33,19 +32,6 @@ class TracingNodeService extends DataService<ITracingNode> {
             }
         };
     }
-
-    /*
-     protected createResource(location: string): ITracingNodeResource {
-     return <ITracingNodeResource>this.$resource(location + "nodes/:id", {id: "@id"}, {
-     nodesForStructure: {
-     method: "GET",
-     url: location + "nodes/findByStructure/:id/",
-     params: {id: "@id"},
-     isArray: true
-     }
-     });
-     }
-     */
 
     public get nodes(): Array<ITracingNode> {
         return this._entityStore.items;

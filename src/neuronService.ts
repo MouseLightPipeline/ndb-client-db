@@ -12,6 +12,10 @@ interface INeuronInjectionMap {
     [key: string]: Array<INeuron>;
 }
 
+interface INeuronResource extends ng.resource.IResourceClass<ng.resource.IResource<INeuron>> {
+    neuronsForSample(obj: any): Array<ISample>;
+}
+
 class NeuronService extends NumberedItemDataService<INeuron> {
     public static $inject = [
         "$resource"
@@ -22,6 +26,10 @@ class NeuronService extends NumberedItemDataService<INeuron> {
 
     constructor($resource: ng.resource.IResourceService) {
         super($resource);
+    }
+
+    private get service(): INeuronResource {
+        return <INeuronResource>this.dataSource;
     }
 
     protected registerNewItem(rawObj: INeuron): INeuron {
@@ -47,6 +55,17 @@ class NeuronService extends NumberedItemDataService<INeuron> {
         }
 
         return item;
+    }
+
+    protected createCustomResourceMethods(): any {
+        return {
+            neuronsForSample: {
+                method: "GET",
+                url: this.apiUrl + "neurons/sample/:id/",
+                params: {id: "@id"},
+                isArray: true
+            }
+        };
     }
 
     protected resourcePath(): string {
@@ -78,5 +97,15 @@ class NeuronService extends NumberedItemDataService<INeuron> {
         } else {
             return item.idNumber.toString();
         }
+    }
+
+    public neuronsForSample(sampleId: string): Promise<Array<ITracingNode>> {
+        return new Promise<Array<ITracingNode>>((resolve, reject) => {
+            this.service.neuronsForSample({id: sampleId}).$promise.then((data) => {
+                resolve(data);
+            }).catch((err) => {
+                reject(err);
+            });
+        });
     }
 }
