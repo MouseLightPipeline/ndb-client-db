@@ -180,6 +180,7 @@ declare class InjectionService extends DataService<IInjection> {
     injectionsForSample(sampleId: string): IInjection[];
     readonly injections: IInjection[];
     getDisplayName(item: IInjection, defaultValue?: string): string;
+    getLongDisplayName(item: IInjection, defaultValue?: string): string;
 }
 
 interface INeuron extends IApiIdNumberItem {

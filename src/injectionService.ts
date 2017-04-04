@@ -68,6 +68,10 @@ class InjectionService extends DataService<IInjection> {
     }
 
     public getDisplayName(item: IInjection, defaultValue: string = ""): string {
+        return this.brainAreaService.getDisplayNameForId(item.brainAreaId);
+    }
+
+    public getLongDisplayName(item: IInjection, defaultValue: string = ""): string {
         return "(" + this.brainAreaService.getDisplayNameForId(item.brainAreaId) + ":" + this.injectionVirusService.getDisplayNameForId(item.injectionVirusId) + ")";
     }
 }
