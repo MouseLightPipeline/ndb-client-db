@@ -97,7 +97,7 @@ abstract class DataService<T extends IApiItem> {
     public getDisplayNameForId(id: string, defaultValue: string = ""): string {
         let item: T = this.find(id);
 
-        return item == null ? defaultValue : this.getDisplayName(item);
+        return item == null ? defaultValue : this.getDisplayName(item, defaultValue);
     }
 
     // Concrete class entry points
