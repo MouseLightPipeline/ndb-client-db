@@ -1,6 +1,7 @@
-interface INeuron extends IApiIdNumberItem {
+interface INeuron extends IApiNamedItem {
     injectionId: string;
     brainAreaId: string;
+    idString: string;
     tag: string;
     keywords: string;
     x: number;
@@ -93,9 +94,9 @@ class NeuronService extends NumberedItemDataService<INeuron> {
         }
 
         if (item.tag.length > 0) {
-            return item.idNumber.toString() + " " + item.tag;
+            return item.idString.toString() + " " + item.tag;
         } else {
-            return item.idNumber.toString();
+            return item.idString.toString();
         }
     }
 
