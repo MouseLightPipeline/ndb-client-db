@@ -1,4 +1,4 @@
-interface INeuron extends IApiNamedItem {
+interface INeuron extends IApiIdNumberItem {
     injectionId: string;
     brainAreaId: string;
     idString: string;
