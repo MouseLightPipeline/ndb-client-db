@@ -183,9 +183,10 @@ declare class InjectionService extends DataService<IInjection> {
     getLongDisplayName(item: IInjection, defaultValue?: string): string;
 }
 
-interface INeuron extends IApiIdNumberItem {
+interface INeuron extends IApiNamedItem {
     injectionId: string;
     brainAreaId: string;
+    idString: string;
     tag: string;
     keywords: string;
     x: number;
